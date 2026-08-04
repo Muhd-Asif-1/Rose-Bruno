@@ -1,0 +1,15 @@
+meta {
+  name: Get Homepage
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/customer/home
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}
