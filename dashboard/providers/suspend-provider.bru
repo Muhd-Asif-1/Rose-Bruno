@@ -1,0 +1,15 @@
+meta {
+  name: Suspend Provider
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{baseUrl}}/admin/providers/{{providerId}}/verification-status?verificationStatus=3
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminAccessToken}}
+}

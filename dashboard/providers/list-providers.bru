@@ -1,0 +1,15 @@
+meta {
+  name: List Providers
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/admin/providers?page=1&pageSize=8
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminAccessToken}}
+}

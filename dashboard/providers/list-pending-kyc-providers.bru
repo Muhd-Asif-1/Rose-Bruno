@@ -1,0 +1,15 @@
+meta {
+  name: List Pending KYC Providers
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/admin/providers?page=1&pageSize=8&verificationStatus=0
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminAccessToken}}
+}

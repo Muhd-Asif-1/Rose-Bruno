@@ -1,0 +1,15 @@
+meta {
+  name: Reject Provider
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/admin/providers/{{providerId}}/verification-status?verificationStatus=2
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminAccessToken}}
+}
