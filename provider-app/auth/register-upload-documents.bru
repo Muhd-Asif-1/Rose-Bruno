@@ -1,0 +1,33 @@
+meta {
+  name: Register Upload Documents
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/app/provider/auth/register/upload-documents
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  sessionToken: {{sessionToken}}
+}
+
+body:multipart-form {
+  displayImage: @file({{displayImagePath}})
+  nationalId: @file({{nationalIdPath}})
+  selfieVerification: @file({{selfieVerificationPath}})
+}
+
+script:post-response {
+  const data = res.getBody()?.data;
+  
+  if (data?.accessToken) {
+    bru.setVar("providerAccessToken", data.accessToken);
+  }
+  
+  if (data?.provider?.providerId) {
+    bru.setVar("providerId", data.provider.providerId);
+  }
+}

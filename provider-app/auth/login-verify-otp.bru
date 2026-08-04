@@ -1,0 +1,30 @@
+meta {
+  name: Login Verify OTP
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/app/provider/auth/login/verify-otp
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  sessionToken: {{sessionToken}}
+}
+
+body:json {
+  {
+    "otp": "{{otp}}"
+  }
+}
+
+script:post-response {
+  const data = res.getBody()?.data;
+  
+  if (data?.accessToken) {
+    bru.setVar("providerAccessToken", data.accessToken);
+  }
+}

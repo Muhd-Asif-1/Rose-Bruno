@@ -1,0 +1,36 @@
+meta {
+  name: Login Request OTP
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/app/provider/auth/login/request-otp
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "phone": {
+      "phoneCode": "{{phoneCode}}",
+      "phoneNumber": "{{phoneNumber}}"
+    }
+  }
+}
+
+script:post-response {
+  const data = res.getBody()?.data;
+  
+  if (data?.sessionToken) {
+    bru.setVar("sessionToken", data.sessionToken);
+  }
+  
+  if (data?.otp) {
+    bru.setVar("otp", data.otp);
+  }
+}

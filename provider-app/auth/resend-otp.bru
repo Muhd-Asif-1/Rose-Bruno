@@ -1,0 +1,32 @@
+meta {
+  name: Resend OTP
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/app/provider/auth/resend-otp
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  sessionToken: {{sessionToken}}
+}
+
+body:json {
+  {}
+}
+
+script:post-response {
+  const data = res.getBody()?.data;
+  
+  if (data?.sessionToken) {
+    bru.setVar("sessionToken", data.sessionToken);
+  }
+  
+  if (data?.otp) {
+    bru.setVar("otp", data.otp);
+  }
+}

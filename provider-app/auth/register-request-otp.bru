@@ -1,0 +1,46 @@
+meta {
+  name: Register Request OTP
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/app/provider/auth/register/request-otp
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "phone": {
+      "phoneCode": "{{phoneCode}}",
+      "phoneNumber": "{{phoneNumber}}"
+    },
+    "fullName": "{{fullName}}",
+    "bio": "{{providerBio}}",
+    "location": {
+      "address": "{{providerAddress}}",
+      "latitude": {{providerLatitude}},
+      "longitude": {{providerLongitude}}
+    },
+    "specialties": [
+      "{{specialtyId}}","6a61e8e42f733dcbd4f45c36","6a62fb1f876d0bc402ea3b6e"
+    ]
+  }
+}
+
+script:post-response {
+  const data = res.getBody()?.data;
+  
+  if (data?.sessionToken) {
+    bru.setVar("sessionToken", data.sessionToken);
+  }
+  
+  if (data?.otp) {
+    bru.setVar("otp", data.otp);
+  }
+}
