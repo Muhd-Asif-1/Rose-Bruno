@@ -1,0 +1,15 @@
+meta {
+  name: List Providers
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/customer/explore/providers?page=1&pageSize=15&search=&categoryId=&gender=&sortBy=topRated&maxDistance=10&minPrice=0&maxPrice=1500&minRating=4
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{accessToken}}
+}

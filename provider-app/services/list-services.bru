@@ -1,0 +1,23 @@
+meta {
+  name: List Services
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/provider/services?page=1&pageSize=15&q=
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
+
+script:post-response {
+  const services = res.getBody()?.data?.services;
+  
+  if (Array.isArray(services) && services[0]?._id) {
+    bru.setVar("serviceId", services[0]._id);
+  }
+}

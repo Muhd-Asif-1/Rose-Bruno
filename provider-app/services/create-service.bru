@@ -1,0 +1,35 @@
+meta {
+  name: Create Service
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/app/provider/services
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "serviceName": "Classic Haircut",
+    "categoryId": "{{specialtyId}}",
+    "price": 250,
+    "duration": 30,
+    "gender": 0,
+    "description": "Haircut with wash and styling"
+  }
+}
+
+script:post-response {
+  const service = res.getBody()?.data?.service;
+  
+  if (service?._id) {
+    bru.setVar("serviceId", service._id);
+  }
+}

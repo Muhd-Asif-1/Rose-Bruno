@@ -1,0 +1,15 @@
+meta {
+  name: Toggle Service Status
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{baseUrl}}/app/provider/services/{{serviceId}}/status
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}

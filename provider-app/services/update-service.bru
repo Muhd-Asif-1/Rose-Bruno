@@ -1,0 +1,27 @@
+meta {
+  name: Update Service
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/app/provider/services/{{serviceId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "serviceName": "Premium Haircut",
+    "categoryId": "{{specialtyId}}",
+    "price": 300,
+    "duration": 45,
+    "gender": 0,
+    "description": "Haircut with wash, styling, and consultation"
+  }
+}
