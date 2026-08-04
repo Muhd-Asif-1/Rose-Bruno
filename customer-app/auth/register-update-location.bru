@@ -1,0 +1,34 @@
+meta {
+  name: Register Update Location
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/app/customer/auth/register/update-location
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  sessionToken: {{sessionToken}}
+}
+
+body:json {
+  {
+    "location": {
+      "address": "Kochi, Kerala",
+      "latitude": 9.9312,
+      "longitude": 76.2673
+    }
+  }
+}
+
+script:post-response {
+  const data = res.getBody()?.data;
+  
+  if (data?.accessToken) {
+    bru.setVar("accessToken", data.accessToken);
+  }
+}

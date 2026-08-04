@@ -1,0 +1,30 @@
+meta {
+  name: Register Verify OTP
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/app/customer/auth/register/verify-otp
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  sessionToken: {{sessionToken}}
+}
+
+body:json {
+  {
+    "otp": "{{otp}}"
+  }
+}
+
+script:post-response {
+  const data = res.getBody()?.data;
+  
+  if (data?.sessionToken) {
+    bru.setVar("sessionToken", data.sessionToken);
+  }
+}
