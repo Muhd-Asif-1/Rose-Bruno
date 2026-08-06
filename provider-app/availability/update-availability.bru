@@ -1,0 +1,31 @@
+meta {
+  name: Update Availability
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{baseUrl}}/app/provider/availability
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "days": [
+      { "day": "monday", "isEnabled": true, "startTime": "10:00", "endTime": "18:00" },
+      { "day": "tuesday", "isEnabled": true, "startTime": "10:00", "endTime": "18:00" },
+      { "day": "wednesday", "isEnabled": true, "startTime": "10:00", "endTime": "18:00" },
+      { "day": "thursday", "isEnabled": true, "startTime": "10:00", "endTime": "18:00" },
+      { "day": "friday", "isEnabled": false, "startTime": null, "endTime": null },
+      { "day": "saturday", "isEnabled": true, "startTime": "10:00", "endTime": "18:00" },
+      { "day": "sunday", "isEnabled": false, "startTime": null, "endTime": null }
+    ],
+    "bufferMinutes": 15
+  }
+}
