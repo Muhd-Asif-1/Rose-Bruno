@@ -1,0 +1,23 @@
+meta {
+  name: List Service Areas
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/provider/service-areas?page=1&pageSize=15&q=
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
+
+script:post-response {
+  const serviceAreas = res.getBody()?.data?.serviceAreas;
+  
+  if (Array.isArray(serviceAreas) && serviceAreas[0]?._id) {
+    bru.setVar("serviceAreaId", serviceAreas[0]._id);
+  }
+}

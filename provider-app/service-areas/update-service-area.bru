@@ -1,0 +1,25 @@
+meta {
+  name: Update Service Area
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/app/provider/service-areas/{{serviceAreaId}}
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Koramangala",
+    "address": "80 Feet Road, Koramangala, Bengaluru, Karnataka 560034",
+    "latitude": 12.9352,
+    "longitude": 77.6245
+  }
+}

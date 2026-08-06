@@ -1,0 +1,33 @@
+meta {
+  name: Create Service Area
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/app/provider/service-areas
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "Indiranagar",
+    "address": "100 Feet Road, Indiranagar, Bengaluru, Karnataka 560038",
+    "latitude": 12.9784,
+    "longitude": 77.6408
+  }
+}
+
+script:post-response {
+  const serviceArea = res.getBody()?.data?.serviceArea;
+  
+  if (serviceArea?._id) {
+    bru.setVar("serviceAreaId", serviceArea._id);
+  }
+}

@@ -1,0 +1,15 @@
+meta {
+  name: Toggle Service Area Status
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/app/provider/service-areas/{{serviceAreaId}}/status
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
