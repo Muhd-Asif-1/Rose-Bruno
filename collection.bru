@@ -18,3 +18,75 @@ vars:pre-request {
   locale: en
   legalPageKey: 1
 }
+
+docs {
+# Rose API Collection
+
+Use the `Local` environment for local testing. Its `baseUrl` already includes `/api`, so request URLs start with `/app` or `/admin`.
+
+## CMS variables
+
+| Variable | Purpose | Default |
+| --- | --- | --- |
+| `locale` | Localized CMS response language | `en` |
+| `legalPageKey` | Legal page requested by public CMS endpoints | `1` |
+
+## Enums
+
+### Locale
+
+| Value | Language |
+| --- | --- |
+| `en` | English |
+| `ar` | Arabic |
+
+### Legal page key
+
+Used by `GET /app/customer/legal-pages` and `GET /app/provider/legal-pages`.
+
+| Value | Page | Customer app | Provider app |
+| --- | --- | --- | --- |
+| `1` | Terms of Service | Yes | Yes |
+| `2` | Privacy Policy | Yes | Yes |
+| `3` | Cookie Policy | Yes | Yes |
+| `4` | Provider Agreement | No | Yes |
+
+Legal pages are returned only when active, not deleted, and published for the requested locale.
+
+### Gender
+
+| Value | Meaning |
+| --- | --- |
+| `1` | Male |
+| `2` | Female |
+| `3` | Other |
+
+### Provider verification status
+
+| Value | Meaning |
+| --- | --- |
+| `0` | Pending KYC |
+| `1` | Accepted / active |
+| `2` | Rejected |
+| `3` | Suspended |
+
+### Provider explore sort order
+
+| Value | Meaning |
+| --- | --- |
+| `topRated` | Highest-rated providers first |
+| `nearest` | Nearest providers first |
+| `lowestPrice` | Lowest starting price first |
+| `mostReviewed` | Most-reviewed providers first |
+
+### FAQ audience
+
+FAQ audiences are configured in dashboard CMS and filtered automatically by the public endpoints.
+
+| Value | Audience | Returned by |
+| --- | --- | --- |
+| `1` | Customer app and website | Customer FAQ endpoint |
+| `2` | Website only | Neither app endpoint |
+| `3` | Customer app | Customer FAQ endpoint |
+| `4` | Provider app | Provider FAQ endpoint |
+}
