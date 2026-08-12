@@ -1,0 +1,11 @@
+meta {
+  name: Get FAQs
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/app/customer/faqs?locale={{locale}}
+  body: none
+  auth: none
+}
