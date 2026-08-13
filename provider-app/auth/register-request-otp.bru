@@ -6,33 +6,27 @@ meta {
 
 post {
   url: {{baseUrl}}/app/provider/auth/register/request-otp
-  body: json
+  body: multipartForm
   auth: none
 }
 
 headers {
-  Content-Type: application/json
 }
 
-body:json {
-  {
-    "phone": {
-      "phoneCode": "{{phoneCode}}",
-      "phoneNumber": "{{phoneNumber}}"
-    },
-    "fullName": "{{fullName}}",
-    "bio": "{{providerBio}}",
-    "gender": 2,
-    "startingPrice": 250,
-    "location": {
-      "address": "{{providerAddress}}",
-      "latitude": {{providerLatitude}},
-      "longitude": {{providerLongitude}}
-    },
-    "specialties": [
-      "{{specialtyId}}","6a61e8e42f733dcbd4f45c36","6a62fb1f876d0bc402ea3b6e"
-    ]
-  }
+body:multipart-form {
+  phone.phoneCode: {{phoneCode}}
+  phone.phoneNumber: {{phoneNumber}}
+  fullName: {{fullName}}
+  bio: {{providerBio}}
+  gender: 2
+  startingPrice: 250
+  location.address: {{providerAddress}}
+  location.latitude: {{providerLatitude}}
+  location.longitude: {{providerLongitude}}
+  specialties[]: {{specialtyId}}
+  specialties[]: 6a61e8e42f733dcbd4f45c36
+  specialties[]: 6a62fb1f876d0bc402ea3b6e
+  displayImage: @file({{displayImagePath}})
 }
 
 script:post-response {
