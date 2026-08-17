@@ -14,18 +14,16 @@ headers {
 }
 
 body:multipart-form {
-  phone.phoneCode: {{phoneCode}}
-  phone.phoneNumber: {{phoneNumber}}
+  phone.phoneCode: {{providerRegistrationPhoneCode}}
+  phone.phoneNumber: {{providerRegistrationPhoneNumber}}
   fullName: {{fullName}}
   bio: {{providerBio}}
-  gender: 2
-  startingPrice: 250
+  gender: {{providerGender}}
+  startingPrice: {{providerStartingPrice}}
   location.address: {{providerAddress}}
   location.latitude: {{providerLatitude}}
   location.longitude: {{providerLongitude}}
   specialties[]: {{specialtyId}}
-  specialties[]: 6a61e8e42f733dcbd4f45c36
-  specialties[]: 6a62fb1f876d0bc402ea3b6e
   displayImage: @file({{displayImagePath}})
 }
 
@@ -33,10 +31,10 @@ script:post-response {
   const data = res.getBody()?.data;
   
   if (data?.sessionToken) {
-    bru.setVar("sessionToken", data.sessionToken);
+    bru.setVar("providerSessionToken", data.sessionToken);
   }
   
   if (data?.otp) {
-    bru.setVar("otp", data.otp);
+    bru.setVar("providerOtp", data.otp);
   }
 }

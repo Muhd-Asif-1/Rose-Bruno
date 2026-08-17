@@ -5,16 +5,9 @@ meta {
 }
 
 vars:pre-request {
-  phoneCode: +91
-  phoneNumber: 9876543210
-  fullName: Rose Customer
-  email: customer@example.com
-  gender: 1
-  otp: 123456
   adminEmail: admin@aip.com
   adminPassword: admin
   providerId: replace-with-provider-id
-  serviceAreaId: replace-with-service-area-id
   locale: en
   legalPageKey: 1
 }
@@ -22,71 +15,31 @@ vars:pre-request {
 docs {
 # Rose API Collection
 
-Use the `Local` environment for local testing. Its `baseUrl` already includes `/api`, so request URLs start with `/app` or `/admin`.
+Use the `Local` environment for application requests. Its `baseUrl` already includes `/api`, so application URLs begin with `/app`.
 
-## CMS variables
+## App request sequences
 
-| Variable | Purpose | Default |
-| --- | --- | --- |
-| `locale` | Localized CMS response language | `en` |
-| `legalPageKey` | Legal page requested by public CMS endpoints | `1` |
+Customer registration is: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. Each response replaces `customerSessionToken`; the final step captures `customerAccessToken`. For an existing customer, use **Login Request OTP** → **Login Verify OTP** instead. **Resend OTP** is valid only while the current customer session represents the register or login OTP flow.
 
-## Enums
+Provider registration is: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. The category request captures the first active `specialtyId`; registration requires at least one unique, active category and three image files. Registration ends in pending KYC and does not issue a bearer token. For an accepted provider, use **Login Request OTP** → **Login Verify OTP**; the successful login captures `providerAccessToken`. **Resend OTP** is valid only while a provider register or login OTP session is active.
 
-### Locale
+All OTP examples use `123456`, which the local API accepts for development. Request/response scripts keep customer and provider session, OTP, and bearer-token variables separate.
 
-| Value | Language |
+The Local fallbacks use the currently seeded category, service, service-area, and replyable-review IDs. List/create responses refresh `specialtyId`, `serviceId`, `serviceAreaId`, and `reviewId` dynamically. Replace an ID if your local database has been reseeded.
+
+Customer review creation requires a bearer token and a completed booking owned by that customer which has not already been reviewed. Provider replies require a bearer token for the provider who owns that review and can be submitted only once.
+
+## Current app enums
+
+| Field | Values |
 | --- | --- |
-| `en` | English |
-| `ar` | Arabic |
+| `locale` | `en`, `ar` |
+| customer/provider `gender` | `1` male, `2` female, `3` other |
+| service `gender` | `0` both, `1` men, `2` women |
+| legal `pageKey` (customer) | `1` terms, `2` privacy, `3` cookie |
+| legal `pageKey` (provider) | customer values plus `4` provider agreement |
+| provider explore `sortBy` | `topRated`, `nearest`, `lowestPrice`, `mostReviewed` |
+| availability `bufferMinutes` | `15`, `30`, `45`, `60` |
 
-### Legal page key
-
-Used by `GET /app/customer/legal-pages` and `GET /app/provider/legal-pages`.
-
-| Value | Page | Customer app | Provider app |
-| --- | --- | --- | --- |
-| `1` | Terms of Service | Yes | Yes |
-| `2` | Privacy Policy | Yes | Yes |
-| `3` | Cookie Policy | Yes | Yes |
-| `4` | Provider Agreement | No | Yes |
-
-Legal pages are returned only when active, not deleted, and published for the requested locale.
-
-### Gender
-
-| Value | Meaning |
-| --- | --- |
-| `1` | Male |
-| `2` | Female |
-| `3` | Other |
-
-### Provider verification status
-
-| Value | Meaning |
-| --- | --- |
-| `0` | Pending KYC |
-| `1` | Accepted / active |
-| `2` | Rejected |
-| `3` | Suspended |
-
-### Provider explore sort order
-
-| Value | Meaning |
-| --- | --- |
-| `topRated` | Highest-rated providers first |
-| `nearest` | Nearest providers first |
-| `lowestPrice` | Lowest starting price first |
-| `mostReviewed` | Most-reviewed providers first |
-
-### FAQ audience
-
-FAQ audiences are configured in dashboard CMS and filtered automatically by the public endpoints.
-
-| Value | Audience | Returned by |
-| --- | --- | --- |
-| `1` | Customer app and website | Customer FAQ endpoint |
-| `2` | Website only | Neither app endpoint |
-| `3` | Customer app | Customer FAQ endpoint |
-| `4` | Provider app | Provider FAQ endpoint |
+Availability updates must include each of `monday` through `sunday` exactly once. Times use 24-hour `HH:mm`; enabled days require a start and end time with the end later than the start, while disabled days may use `null` times.
 }

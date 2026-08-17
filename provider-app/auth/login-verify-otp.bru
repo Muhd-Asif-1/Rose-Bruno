@@ -12,12 +12,12 @@ post {
 
 headers {
   Content-Type: application/json
-  sessionToken: {{sessionToken}}
+  sessionToken: {{providerSessionToken}}
 }
 
 body:json {
   {
-    "otp": "{{otp}}"
+    "otp": "{{providerOtp}}"
   }
 }
 

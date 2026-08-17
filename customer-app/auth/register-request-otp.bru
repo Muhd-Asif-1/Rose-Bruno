@@ -18,11 +18,11 @@ body:json {
   {
     "fullName": "{{fullName}}",
     "phone": {
-      "phoneCode": "{{phoneCode}}",
-      "phoneNumber": "{{phoneNumber}}"
+      "phoneCode": "{{customerRegistrationPhoneCode}}",
+      "phoneNumber": "{{customerRegistrationPhoneNumber}}"
     },
     "email": "{{email}}",
-    "gender": {{gender}}
+    "gender": {{customerGender}}
   }
 }
 
@@ -30,10 +30,10 @@ script:post-response {
   const data = res.getBody()?.data;
   
   if (data?.sessionToken) {
-    bru.setVar("sessionToken", data.sessionToken);
+    bru.setVar("customerSessionToken", data.sessionToken);
   }
   
   if (data?.otp) {
-    bru.setVar("otp", data.otp);
+    bru.setVar("customerOtp", data.otp);
   }
 }

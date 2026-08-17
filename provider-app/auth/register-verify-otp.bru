@@ -12,12 +12,12 @@ post {
 
 headers {
   Content-Type: application/json
-  sessionToken: {{sessionToken}}
+  sessionToken: {{providerSessionToken}}
 }
 
 body:json {
   {
-    "otp": "{{otp}}"
+    "otp": "{{providerOtp}}"
   }
 }
 
@@ -25,6 +25,6 @@ script:post-response {
   const data = res.getBody()?.data;
   
   if (data?.sessionToken) {
-    bru.setVar("sessionToken", data.sessionToken);
+    bru.setVar("providerSessionToken", data.sessionToken);
   }
 }
