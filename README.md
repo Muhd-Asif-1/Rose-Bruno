@@ -60,7 +60,6 @@ Create Review requires an authenticated customer and an owned, completed booking
 | --- | --- |
 | `topRated` | Highest-rated providers first |
 | `nearest` | Nearest providers first |
-| `lowestPrice` | Lowest starting price first |
 | `mostReviewed` | Most-reviewed providers first |
 
 ### Availability
