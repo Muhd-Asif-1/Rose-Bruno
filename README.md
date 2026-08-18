@@ -14,7 +14,7 @@ Set the `Local` environment before sending application requests. Its `baseUrl` a
 
 ## Required sequences
 
-Customer registration: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. The final request captures `customerAccessToken`. Existing customers use the login request/verify pair. Provider registration: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. This creates a pending-KYC provider; only an accepted provider login returns `providerAccessToken`.
+Customer registration: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. The final request captures `customerAccessToken`. Existing customers use the login request/verify pair. Provider registration: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. This creates a pending provider; only an active provider login returns `providerAccessToken`.
 
 The local development API accepts OTP `123456`. Resend requests apply only to active register/login OTP sessions. Do not reuse customer variables in provider requests or vice versa.
 

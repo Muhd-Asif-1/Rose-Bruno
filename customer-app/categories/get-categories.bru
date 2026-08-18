@@ -1,0 +1,23 @@
+meta {
+  name: Get Categories
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/customer/categories?locale={{locale}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
+
+script:post-response {
+  const categories = res.getBody()?.data?.categories;
+  
+  if (Array.isArray(categories) && categories[0]?._id) {
+    bru.setVar("specialtyId", categories[0]._id);
+  }
+}
