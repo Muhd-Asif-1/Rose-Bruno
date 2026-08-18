@@ -58,9 +58,10 @@ Create Review requires an authenticated customer and an owned, completed booking
 
 | Value | Meaning |
 | --- | --- |
-| `topRated` | Highest-rated providers first |
-| `nearest` | Nearest providers first |
-| `mostReviewed` | Most-reviewed providers first |
+| `1` (`topRated`) | Highest-rated providers first |
+| `2` (`nearest`) | Nearest providers first |
+| `3` (`lowestPrice`) | Lowest active-service price first |
+| `4` (`mostReviewed`) | Most-reviewed providers first |
 
 ### Availability
 

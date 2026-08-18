@@ -38,7 +38,7 @@ Customer review creation requires a bearer token and a completed booking owned b
 | service `gender` | `0` both, `1` men, `2` women |
 | legal `pageKey` (customer) | `1` terms, `2` privacy, `3` cookie |
 | legal `pageKey` (provider) | customer values plus `4` provider agreement |
-| provider explore `sortBy` | `topRated`, `nearest`, `mostReviewed` |
+| provider explore `sortBy` | `1` topRated, `2` nearest, `3` lowestPrice, `4` mostReviewed |
 | availability `bufferMinutes` | `15`, `30`, `45`, `60` |
 
 Availability updates must include each of `monday` through `sunday` exactly once. Times use 24-hour `HH:mm`; enabled days require a start and end time with the end later than the start, while disabled days may use `null` times.
