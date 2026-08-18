@@ -1,6 +1,6 @@
 # Rose Bruno Collection
 
-Set the `Local` environment before sending requests. Its `baseUrl` already includes `/api`, so request paths begin with `/app` or `/admin`.
+Set the `Local` environment before sending application requests. Its `baseUrl` already includes `/api`, so request paths begin with `/app`.
 
 ## Collection variables
 
@@ -8,7 +8,17 @@ Set the `Local` environment before sending requests. Its `baseUrl` already inclu
 | --- | --- | --- |
 | `locale` | Localized CMS response language | `en` |
 | `legalPageKey` | Legal page requested by the public CMS endpoints | `1` |
-| `gender` | Customer registration gender | `1` |
+| `customerAccessToken` / `providerAccessToken` | Captured bearer tokens for their respective apps | Empty until login/registration completes |
+| `customerSessionToken` / `providerSessionToken` | Captured OTP-flow sessions; never interchangeable | Empty until an OTP is requested |
+| `specialtyId`, `serviceId`, `serviceAreaId`, `reviewId` | Editable seeded fallbacks; captured dynamically where a response exposes them | Local seed values |
+
+## Required sequences
+
+Customer registration: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. The final request captures `customerAccessToken`. Existing customers use the login request/verify pair. Provider registration: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. This creates a pending-KYC provider; only an accepted provider login returns `providerAccessToken`.
+
+The local development API accepts OTP `123456`. Resend requests apply only to active register/login OTP sessions. Do not reuse customer variables in provider requests or vice versa.
+
+Create Review requires an authenticated customer and an owned, completed booking that has no review. Create Review Reply requires the authenticated owner provider and a review with no existing reply.
 
 ## Enums
 
@@ -21,8 +31,6 @@ Set the `Local` environment before sending requests. Its `baseUrl` already inclu
 
 ### Legal page key
 
-Used by `GET /app/customer/legal-pages` and `GET /app/provider/legal-pages`.
-
 | Value | Page | Customer app | Provider app |
 | --- | --- | --- | --- |
 | `1` | Terms of Service | Yes | Yes |
@@ -30,11 +38,7 @@ Used by `GET /app/customer/legal-pages` and `GET /app/provider/legal-pages`.
 | `3` | Cookie Policy | Yes | Yes |
 | `4` | Provider Agreement | No | Yes |
 
-The requested page is returned only when it is active, not deleted, and published for the selected locale.
-
-### Gender
-
-Used by customer/provider registration and provider services.
+### Customer and provider gender
 
 | Value | Meaning |
 | --- | --- |
@@ -42,35 +46,22 @@ Used by customer/provider registration and provider services.
 | `2` | Female |
 | `3` | Other |
 
-### Provider verification status
-
-Used by the dashboard provider verification-status requests.
+### Service gender
 
 | Value | Meaning |
 | --- | --- |
-| `0` | Pending KYC |
-| `1` | Accepted / active |
-| `2` | Rejected |
-| `3` | Suspended |
+| `0` | Both |
+| `1` | Men |
+| `2` | Women |
 
 ### Provider explore sort order
-
-Used by `GET /app/customer/explore/providers`.
 
 | Value | Meaning |
 | --- | --- |
 | `topRated` | Highest-rated providers first |
 | `nearest` | Nearest providers first |
-| `lowestPrice` | Lowest starting price first |
 | `mostReviewed` | Most-reviewed providers first |
 
-### FAQ audience
+### Availability
 
-FAQ audiences are configured in the dashboard CMS and are filtered automatically by the public endpoints.
-
-| Value | Audience | Returned by |
-| --- | --- | --- |
-| `1` | Customer app and website | Customer FAQ endpoint |
-| `2` | Website only | Neither app endpoint |
-| `3` | Customer app | Customer FAQ endpoint |
-| `4` | Provider app | Provider FAQ endpoint |
+`PUT /app/provider/availability` requires all seven day names exactly once: `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, and `sunday`. Times must be 24-hour `HH:mm`; enabled days need a start and an end time, with end after start. Valid buffer values are `15`, `30`, `45`, and `60` minutes.

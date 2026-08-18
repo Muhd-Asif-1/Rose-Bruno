@@ -11,22 +11,17 @@ post {
 }
 
 headers {
-  sessionToken: {{sessionToken}}
+  sessionToken: {{providerSessionToken}}
 }
 
 body:multipart-form {
-  displayImage: @file({{displayImagePath}})
   nationalId: @file({{nationalIdPath}})
   selfieVerification: @file({{selfieVerificationPath}})
 }
 
 script:post-response {
   const data = res.getBody()?.data;
-  
-  if (data?.accessToken) {
-    bru.setVar("providerAccessToken", data.accessToken);
-  }
-  
+
   if (data?.provider?.providerId) {
     bru.setVar("providerId", data.provider.providerId);
   }

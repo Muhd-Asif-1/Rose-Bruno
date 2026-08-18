@@ -6,43 +6,34 @@ meta {
 
 post {
   url: {{baseUrl}}/app/provider/auth/register/request-otp
-  body: json
+  body: multipartForm
   auth: none
 }
 
 headers {
-  Content-Type: application/json
 }
 
-body:json {
-  {
-    "phone": {
-      "phoneCode": "{{phoneCode}}",
-      "phoneNumber": "{{phoneNumber}}"
-    },
-    "fullName": "{{fullName}}",
-    "bio": "{{providerBio}}",
-    "gender": 2,
-    "startingPrice": 250,
-    "location": {
-      "address": "{{providerAddress}}",
-      "latitude": {{providerLatitude}},
-      "longitude": {{providerLongitude}}
-    },
-    "specialties": [
-      "{{specialtyId}}","6a61e8e42f733dcbd4f45c36","6a62fb1f876d0bc402ea3b6e"
-    ]
-  }
+body:multipart-form {
+  phone.phoneCode: {{providerRegistrationPhoneCode}}
+  phone.phoneNumber: {{providerRegistrationPhoneNumber}}
+  fullName: {{fullName}}
+  bio: {{providerBio}}
+  gender: {{providerGender}}
+  location.address: {{providerAddress}}
+  location.latitude: {{providerLatitude}}
+  location.longitude: {{providerLongitude}}
+  specialties[]: {{specialtyId}}
+  displayImage: @file({{displayImagePath}})
 }
 
 script:post-response {
   const data = res.getBody()?.data;
   
   if (data?.sessionToken) {
-    bru.setVar("sessionToken", data.sessionToken);
+    bru.setVar("providerSessionToken", data.sessionToken);
   }
   
   if (data?.otp) {
-    bru.setVar("otp", data.otp);
+    bru.setVar("providerOtp", data.otp);
   }
 }

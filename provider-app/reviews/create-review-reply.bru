@@ -1,0 +1,22 @@
+meta {
+  name: Create Review Reply
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/app/provider/reviews/{{reviewId}}/reply
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "reply": "{{reviewReply}}"
+  }
+}
