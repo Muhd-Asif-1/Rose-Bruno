@@ -1,0 +1,32 @@
+meta {
+  name: Create Address
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/app/customer/addresses
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "label": {{addressLabel}},
+    "street": "{{addressStreet}}",
+    "city": "{{addressCity}}"
+  }
+}
+
+script:post-response {
+  const address = res.getBody()?.data?.address;
+
+  if (address?._id) {
+    bru.setVar("addressId", address._id);
+  }
+}
