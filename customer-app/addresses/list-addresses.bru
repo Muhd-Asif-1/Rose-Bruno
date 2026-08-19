@@ -1,0 +1,23 @@
+meta {
+  name: List Addresses
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/customer/addresses
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
+
+script:post-response {
+  const addresses = res.getBody()?.data?.addresses;
+
+  if (Array.isArray(addresses) && addresses[0]?._id) {
+    bru.setVar("addressId", addresses[0]._id);
+  }
+}

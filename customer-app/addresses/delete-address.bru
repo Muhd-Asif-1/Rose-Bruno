@@ -1,0 +1,15 @@
+meta {
+  name: Delete Address
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/app/customer/addresses/{{addressId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
