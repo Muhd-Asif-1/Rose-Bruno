@@ -10,7 +10,7 @@ Set the `Local` environment before sending application requests. Its `baseUrl` a
 | `legalPageKey` | Legal page requested by the public CMS endpoints | `1` |
 | `customerAccessToken` / `providerAccessToken` | Captured bearer tokens for their respective apps | Empty until login/registration completes |
 | `customerSessionToken` / `providerSessionToken` | Captured OTP-flow sessions; never interchangeable | Empty until an OTP is requested |
-| `specialtyId`, `serviceId`, `serviceAreaId`, `reviewId` | Editable seeded fallbacks; captured dynamically where a response exposes them | Local seed values |
+| `specialtyId`, `serviceId`, `serviceAreaId`, `reviewId` | Editable seeded fallback IDs | Local seed values |
 
 ## Required sequences
 
@@ -58,10 +58,10 @@ Create Review requires an authenticated customer and an owned, completed booking
 
 | Value | Meaning |
 | --- | --- |
-| `1` (`topRated`) | Highest-rated providers first |
-| `2` (`nearest`) | Nearest providers first |
-| `3` (`lowestPrice`) | Lowest active-service price first |
-| `4` (`mostReviewed`) | Most-reviewed providers first |
+| `1` (`topRated`) | Top rated (placeholder; sorting is not active yet) |
+| `2` (`nearest`) | Nearest (placeholder; sorting is not active yet) |
+| `3` (`lowestPrice`) | Lowest price (placeholder; sorting is not active yet) |
+| `4` (`highestPrice`) | Highest price (placeholder; sorting is not active yet) |
 
 ### Availability
 

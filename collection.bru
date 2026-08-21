@@ -21,11 +21,11 @@ Use the `Local` environment for application requests. Its `baseUrl` already incl
 
 Customer registration is: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. Each response replaces `customerSessionToken`; the final step captures `customerAccessToken`. For an existing customer, use **Login Request OTP** → **Login Verify OTP** instead. **Resend OTP** is valid only while the current customer session represents the register or login OTP flow.
 
-Provider registration is: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. The category request captures the first active `specialtyId`; registration requires at least one unique, active category and three image files. Registration ends in pending status and does not issue a bearer token. For an active provider, use **Login Request OTP** → **Login Verify OTP**; the successful login captures `providerAccessToken`. **Resend OTP** is valid only while a provider register or login OTP session is active.
+Provider registration is: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. Set `specialtyId` in the Local environment to an active category before registration; registration requires at least one unique, active category and three image files. Registration ends in pending status and does not issue a bearer token. For an active provider, use **Login Request OTP** → **Login Verify OTP**; the successful login captures `providerAccessToken`. **Resend OTP** is valid only while a provider register or login OTP session is active.
 
 All OTP examples use `123456`, which the local API accepts for development. Request/response scripts keep customer and provider session, OTP, and bearer-token variables separate.
 
-The Local fallbacks use the currently seeded category, service, service-area, and replyable-review IDs. List/create responses refresh `specialtyId`, `serviceId`, `serviceAreaId`, and `reviewId` dynamically. Replace an ID if your local database has been reseeded.
+The Local environment uses currently seeded category, service, service-area, and replyable-review IDs. Replace an ID if your local database has been reseeded.
 
 Customer review creation requires a bearer token and a completed booking owned by that customer which has not already been reviewed. Provider replies require a bearer token for the provider who owns that review and can be submitted only once.
 

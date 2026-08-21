@@ -9,11 +9,3 @@ get {
   body: none
   auth: none
 }
-
-script:post-response {
-  const categories = res.getBody()?.data?.categories;
-  
-  if (Array.isArray(categories) && categories[0]?._id) {
-    bru.setVar("specialtyId", categories[0]._id);
-  }
-}
