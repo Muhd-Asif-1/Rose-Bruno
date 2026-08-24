@@ -1,0 +1,15 @@
+meta {
+  name: Get Provider
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/app/customer/explore/providers/{{providerId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
