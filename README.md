@@ -2,6 +2,12 @@
 
 Set the `Local` environment before sending application requests. Its `baseUrl` already includes `/api`, so request paths begin with `/app`.
 
+## Oursms provider verification
+
+The **Oursms SMS** folder is a provider-level readiness check, separate from the local Rose API. Select the `Oursms` environment, then replace `oursmsApiKey`, `oursmsSenderId`, and `oursmsTestRecipient` with live values. The first four requests validate the provider without sending an SMS. **Send OTP Test SMS** sends a real transactional message and can use one credit; it captures the returned message/job identifiers when supplied. Run **Get Message Status** afterward to verify delivery; **Get Job Message Status** additionally requires a job ID from the send response.
+
+Use the source address exactly as returned by **List Source Addresses**. Indian test numbers must be entered in international format without `+`, for example `919876543210`. An Indian delivery test is only meaningful after Oursms confirms a supported India route and the required Indian DLT registration/template settings are configured.
+
 ## Collection variables
 
 | Variable | Purpose | Default |

@@ -1,0 +1,31 @@
+meta {
+  name: Get Message Status
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{oursmsBaseUrl}}/msgs/status
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{oursmsApiKey}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "msgIds": [
+      "{{oursmsMessageId}}"
+    ]
+  }
+}
+
+tests {
+  test("returns the tracked message status", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()?.statuses).to.be.an("array");
+  });
+}

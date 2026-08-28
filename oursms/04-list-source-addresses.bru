@@ -1,0 +1,21 @@
+meta {
+  name: List Source Addresses
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{oursmsBaseUrl}}/addresses/srcs?start=0&count=100
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{oursmsApiKey}}
+}
+
+tests {
+  test("returns the approved source addresses", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

@@ -1,0 +1,54 @@
+meta {
+  name: Send OTP Test SMS
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{oursmsBaseUrl}}/msgs/sms
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{oursmsApiKey}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "src": "{{oursmsSenderId}}",
+    "dests": [
+      "{{oursmsTestRecipient}}"
+    ],
+    "body": "Rose verification code: {{oursmsTestOtp}}. Do not share this code.",
+    "priority": 1,
+    "validity": 5,
+    "maxParts": 1,
+    "dlr": true,
+    "msgClass": "transactional",
+    "secure": true,
+    "details": true
+  }
+}
+
+script:post-response {
+  const data = res.getBody();
+  const message = data?.messages?.[0] ?? data?.message ?? data?.details?.[0] ?? data?.[0];
+  const messageId = message?.msgId ?? message?.id ?? data?.msgId ?? data?.messageId;
+  const jobId = message?.jobId ?? data?.jobId;
+
+  if (messageId) {
+    bru.setVar("oursmsMessageId", messageId);
+  }
+
+  if (jobId) {
+    bru.setVar("oursmsJobId", jobId);
+  }
+}
+
+tests {
+  test("queues the OTP SMS", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}

@@ -1,0 +1,22 @@
+meta {
+  name: Get Job Message Status
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{oursmsBaseUrl}}/job/status?jobId={{oursmsJobId}}&dest={{oursmsTestRecipient}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{oursmsApiKey}}
+}
+
+tests {
+  test("returns delivery statuses for the tracked job", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()?.statuses).to.be.an("array");
+  });
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Oursms SMS
+  seq: 90
+}
+
+auth {
+  mode: none
+}
+
+docs {
+# Oursms SMS verification
+
+Select the **Oursms** environment and set `oursmsApiKey`, `oursmsSenderId`, and `oursmsTestRecipient` before running these requests.
+
+Run the requests in this order:
+
+1. **System Health** confirms that the provider API is available.
+2. **Get User Information**, **Get Credits**, and **List Source Addresses** validate the API key, billing balance, and approved sender IDs without sending a message.
+3. **Send OTP Test SMS** sends one real transactional SMS and may consume a credit. Its response stores `oursmsMessageId` and `oursmsJobId` when supplied.
+4. **Get Message Status**, **Get Job Message Status**, and **Download Delivery Reports** confirm the provider's reported delivery state. The job-status check needs a job ID from the send response.
+
+Use an approved source address exactly as returned by **List Source Addresses**. For an Indian recipient, use the complete international number with no plus sign, for example `919876543210`.
+}

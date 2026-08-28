@@ -1,0 +1,23 @@
+meta {
+  name: System Health
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{oursmsBaseUrl}}/monitor
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{oursmsApiKey}}
+}
+
+tests {
+  test("returns a healthy system response", function() {
+    expect(res.getStatus()).to.equal(200);
+    expect(res.getBody()?.system?.status).to.equal("up");
+    expect(res.getBody()?.queue?.status).to.equal("up");
+  });
+}

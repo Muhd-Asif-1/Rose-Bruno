@@ -1,0 +1,21 @@
+meta {
+  name: Download Delivery Reports
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{oursmsBaseUrl}}/inbox/dlrs?count=20
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{oursmsApiKey}}
+}
+
+tests {
+  test("retrieves recent delivery reports", function() {
+    expect(res.getStatus()).to.equal(200);
+  });
+}
