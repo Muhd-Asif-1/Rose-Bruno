@@ -1,0 +1,39 @@
+meta {
+  name: Create Booking - Map Pin
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/app/customer/bookings
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "providerId": "{{providerId}}",
+    "serviceId": "{{serviceId}}",
+    "scheduledAt": "{{mapBookingScheduledAt}}",
+    "specialInstructions": "{{bookingSpecialInstructions}}",
+    "location": {
+      "type": "map_pin",
+      "address": "{{bookingMapAddress}}",
+      "latitude": {{bookingMapLatitude}},
+      "longitude": {{bookingMapLongitude}}
+    }
+  }
+}
+
+script:post-response {
+  const booking = res.getBody()?.data?.booking;
+
+  if (booking?._id) {
+    bru.setVar("bookingId", booking._id);
+  }
+}

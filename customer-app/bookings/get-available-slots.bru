@@ -1,0 +1,27 @@
+meta {
+  name: Get Available Slots
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/customer/bookings/available-slots?providerId={{providerId}}&serviceId={{serviceId}}&date={{bookingDate}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
+
+script:post-response {
+  const slots = res.getBody()?.data?.slots;
+
+  if (Array.isArray(slots) && slots[0]?.scheduledAt) {
+    bru.setVar("bookingScheduledAt", slots[0].scheduledAt);
+  }
+
+  if (Array.isArray(slots) && slots[1]?.scheduledAt) {
+    bru.setVar("mapBookingScheduledAt", slots[1].scheduledAt);
+  }
+}

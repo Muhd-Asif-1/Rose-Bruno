@@ -29,6 +29,10 @@ The Local environment uses currently seeded category, service, service-area, and
 
 Customer review creation requires a bearer token and a completed booking owned by that customer which has not already been reviewed. Provider replies require a bearer token for the provider who owns that review and can be submitted only once.
 
+Customer booking creation is: **List Providers** → **Get Provider** → **Get Available Slots** → either **Create Booking - Saved Address** or **Create Booking - Map Pin** → **Get Booking Details**. The provider requests capture `providerId` and `serviceId`, while the slots request captures the first two available timestamps. For saved-address booking, run **List Addresses** or **Create Address** first so `addressId` is populated. Set `bookingDate` to a future enabled availability date before fetching slots. The two create requests are alternatives; when both are run, they use different captured slots.
+
+New booking requests contain no payment data. They start with booking `status` and request `requestStatus` set to `pending`; the details endpoint includes `requestExpiresAt` and `remainingSeconds`. If the provider does not respond before the configured timeout, subsequent details responses show `status: cancelled` and `requestStatus: expired`.
+
 ## Current app enums
 
 | Field | Values |
@@ -41,6 +45,8 @@ Customer review creation requires a bearer token and a completed booking owned b
 | provider explore `sortBy` | `1` topRated, `2` nearest, `3` lowestPrice, `4` mostReviewed |
 | availability `bufferMinutes` | `15`, `30`, `45`, `60` |
 | customer address `label` | `1` home, `2` work, `3` other |
+| booking `status` | `pending`, `upcoming`, `in_progress`, `completed`, `cancelled` |
+| booking `requestStatus` | `pending`, `accepted`, `rejected`, `expired` |
 
 Availability updates must include each of `monday` through `sunday` exactly once. Times use 24-hour `HH:mm`; enabled days require a start and end time with the end later than the start, while disabled days may use `null` times.
 }
