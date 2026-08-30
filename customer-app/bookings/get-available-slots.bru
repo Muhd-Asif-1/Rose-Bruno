@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/app/customer/bookings/available-slots?providerId={{providerId}}&serviceId={{serviceId}}&date={{bookingDate}}
+  url: {{baseUrl}}/app/customer/bookings/available-slots?providerId={{providerId}}&serviceIds={{serviceId}},{{secondServiceId}}&date={{bookingDate}}
   body: none
   auth: none
 }

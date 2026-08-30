@@ -22,6 +22,14 @@ script:post-response {
   }
 
   if (Array.isArray(provider?.services) && provider.services[0]?._id) {
-    bru.setVar("serviceId", provider.services[0]._id);
+    const firstService = provider.services[0];
+    const secondService = provider.services.find(
+      (service) =>
+        service._id !== firstService._id &&
+        service.categoryId === firstService.categoryId
+    );
+
+    bru.setVar("serviceId", firstService._id);
+    bru.setVar("secondServiceId", secondService?._id ?? "");
   }
 }

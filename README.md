@@ -16,7 +16,7 @@ Use the source address exactly as returned by **List Source Addresses**. Indian 
 | `legalPageKey` | Legal page requested by the public CMS endpoints | `1` |
 | `customerAccessToken` / `providerAccessToken` | Captured bearer tokens for their respective apps | Empty until login/registration completes |
 | `customerSessionToken` / `providerSessionToken` | Captured OTP-flow sessions; never interchangeable | Empty until an OTP is requested |
-| `specialtyId`, `providerId`, `serviceId`, `serviceAreaId`, `bookingId`, `reviewId` | IDs captured by requests or editable seeded fallbacks | Mixed |
+| `specialtyId`, `providerId`, `serviceId`, `secondServiceId`, `serviceAreaId`, `bookingId`, `reviewId` | IDs captured by requests or editable seeded fallbacks | Mixed |
 | `bookingDate` | Future Riyadh date used to generate available booking slots | `2026-09-01` |
 | `bookingScheduledAt`, `mapBookingScheduledAt` | First two available timestamps captured by Get Available Slots | Empty until slots are fetched |
 | `bookingMapAddress`, `bookingMapLatitude`, `bookingMapLongitude` | Direct map-pin location used by the map booking example | Riyadh example |
@@ -32,12 +32,12 @@ Create Review requires an authenticated customer and an owned, completed booking
 ## Customer booking sequence
 
 1. Log in as a customer so `customerAccessToken` is populated.
-2. Run **List Providers** to capture `providerId`, then **Get Provider** to capture an active `serviceId`.
-3. Set `bookingDate` to a future date on which that provider is enabled, then run **Get Available Slots**. It captures the first slot in `bookingScheduledAt` and the second in `mapBookingScheduledAt`.
+2. Run **List Providers** to capture `providerId`, then **Get Provider** to capture two active services from the same category in `serviceId` and `secondServiceId`. If no same-category pair exists, create or activate another service before continuing.
+3. Set `bookingDate` to a future date on which that provider is enabled, then run **Get Available Slots**. It calculates availability from the summed service duration, applies one provider buffer after the bundle, and captures the first slot in `bookingScheduledAt` and the second in `mapBookingScheduledAt`.
 4. For a saved address, run **List Addresses** or **Create Address**, followed by **Create Booking - Saved Address**. Alternatively, run **Create Booking - Map Pin** with the map variables.
 5. Run **Get Booking Details** with the captured `bookingId` to inspect the pending countdown and, after the configured timeout, the automatic expired/cancelled transition.
 
-The two create requests intentionally use different captured slots. Booking bodies contain no payment method or transaction data.
+The two create requests intentionally use different captured slots. Both send a `serviceIds` array; every selected service must be unique, active, owned by the selected provider, and belong to the same category. Booking bodies contain no payment method or transaction data.
 
 ## Enums
 

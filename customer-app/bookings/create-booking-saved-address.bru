@@ -18,7 +18,10 @@ headers {
 body:json {
   {
     "providerId": "{{providerId}}",
-    "serviceId": "{{serviceId}}",
+    "serviceIds": [
+      "{{serviceId}}",
+      "{{secondServiceId}}"
+    ],
     "scheduledAt": "{{bookingScheduledAt}}",
     "specialInstructions": "{{bookingSpecialInstructions}}",
     "location": {
