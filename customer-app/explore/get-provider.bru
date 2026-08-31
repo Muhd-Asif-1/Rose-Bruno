@@ -17,15 +17,20 @@ headers {
 script:post-response {
   const provider = res.getBody()?.data?.provider;
 
-  if (Array.isArray(provider?.services) && provider.services[0]?._id) {
-    const firstService = provider.services[0];
+  if (Array.isArray(provider?.services) && provider.services.length > 0) {
+    // serviceId stays a plain, user-editable environment variable (like
+    // providerId) instead of a script-owned runtime variable. If it already
+    // points at one of this provider's services, keep it and just look up a
+    // same-category match for secondServiceId; otherwise fall back to the
+    // first service for that lookup only.
+    const currentServiceId = bru.getVar("serviceId");
+    const referenceService = provider.services.find((service) => service._id === currentServiceId) ?? provider.services[0];
     const secondService = provider.services.find(
       (service) =>
-        service._id !== firstService._id &&
-        service.categoryId === firstService.categoryId
+        service._id !== referenceService._id &&
+        service.categoryId === referenceService.categoryId
     );
 
-    bru.setVar("serviceId", firstService._id);
     bru.setVar("secondServiceId", secondService?._id ?? "");
   }
 }
