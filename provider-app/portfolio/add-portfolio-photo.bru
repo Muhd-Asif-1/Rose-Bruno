@@ -1,0 +1,28 @@
+meta {
+  name: Add Portfolio Photo
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/app/provider/portfolio/photos
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
+
+body:multipart-form {
+  photo: @file({{portfolioPhotoPath}})
+}
+
+script:post-response {
+  const portfolio = res.getBody()?.data?.portfolio;
+  const photo = Array.isArray(portfolio) ? portfolio[portfolio.length - 1] : null;
+
+  if (photo?._id) {
+    bru.setVar("portfolioPhotoId", photo._id);
+  }
+}

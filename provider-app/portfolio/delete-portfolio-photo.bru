@@ -1,0 +1,15 @@
+meta {
+  name: Delete Portfolio Photo
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{baseUrl}}/app/provider/portfolio/photos/{{portfolioPhotoId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}

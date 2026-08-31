@@ -22,6 +22,8 @@ Customer registration is: **Register Request OTP** → **Register Verify OTP** �
 
 Provider registration is: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. Set `specialtyId` in the Local environment to an active category before registration; registration requires at least one unique, active category, a display image, National ID front and back images, and a selfie-verification image. The National ID request fields use `nationalId[]`, with front first and back second. Registration ends in pending status and does not issue a bearer token. For an active provider, use **Login Request OTP** → **Login Verify OTP**; the successful login captures `providerAccessToken`. **Resend OTP** is valid only while a provider register or login OTP session is active.
 
+An active KYC-approved provider can add portfolio images one at a time using **Add Portfolio Photo**. The response captures the new `portfolioPhotoId`, which **Delete Portfolio Photo** uses to remove that image.
+
 All OTP examples use `123456`, which the local API accepts for development. Request/response scripts keep customer and provider session, OTP, and bearer-token variables separate.
 
 The Local environment uses currently seeded category, service, service-area, and replyable-review IDs. Replace an ID if your local database has been reseeded.
