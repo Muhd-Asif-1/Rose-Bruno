@@ -28,6 +28,8 @@ Customer registration: **Register Request OTP** → **Register Verify OTP** → 
 
 The local development API accepts OTP `123456`. Resend requests apply only to active register/login OTP sessions. Do not reuse customer variables in provider requests or vice versa.
 
+Provider registration requires a display image, National ID front and back images, and a selfie-verification image. Submit the National ID images as `nationalId[]` in front-then-back order. Provider auth responses return only session/access tokens and provider ID/verification status where applicable.
+
 Create Review requires an authenticated customer and an owned, completed booking that has no review. Create Review Reply requires the authenticated owner provider and a review with no existing reply.
 
 ## Customer booking sequence

@@ -20,7 +20,7 @@ Use the `Local` environment for application requests. Its `baseUrl` already incl
 
 Customer registration is: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. Each response replaces `customerSessionToken`; the final step captures `customerAccessToken`. For an existing customer, use **Login Request OTP** → **Login Verify OTP** instead. **Resend OTP** is valid only while the current customer session represents the register or login OTP flow.
 
-Provider registration is: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. Set `specialtyId` in the Local environment to an active category before registration; registration requires at least one unique, active category and three image files. Registration ends in pending status and does not issue a bearer token. For an active provider, use **Login Request OTP** → **Login Verify OTP**; the successful login captures `providerAccessToken`. **Resend OTP** is valid only while a provider register or login OTP session is active.
+Provider registration is: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. Set `specialtyId` in the Local environment to an active category before registration; registration requires at least one unique, active category, a display image, National ID front and back images, and a selfie-verification image. The National ID request fields use `nationalId[]`, with front first and back second. Registration ends in pending status and does not issue a bearer token. For an active provider, use **Login Request OTP** → **Login Verify OTP**; the successful login captures `providerAccessToken`. **Resend OTP** is valid only while a provider register or login OTP session is active.
 
 All OTP examples use `123456`, which the local API accepts for development. Request/response scripts keep customer and provider session, OTP, and bearer-token variables separate.
 
@@ -37,7 +37,7 @@ New booking requests contain no payment data. They start with booking `status` a
 | Field | Values |
 | --- | --- |
 | `locale` | `en`, `ar` |
-| customer/provider `gender` | `1` male, `2` female, `3` other |
+| customer `gender` | `1` male, `2` female, `3` other |
 | service `gender` | `0` both, `1` men, `2` women |
 | legal `pageKey` (customer) | `1` terms, `2` privacy, `3` cookie |
 | legal `pageKey` (provider) | customer values plus `4` provider agreement |

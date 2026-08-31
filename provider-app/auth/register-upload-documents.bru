@@ -15,6 +15,7 @@ headers {
 }
 
 body:multipart-form {
-  nationalId: @file({{nationalIdPath}})
+  nationalId[]: @file({{nationalIdFrontPath}})
+  nationalId[]: @file({{nationalIdBackPath}})
   selfieVerification: @file({{selfieVerificationPath}})
 }
