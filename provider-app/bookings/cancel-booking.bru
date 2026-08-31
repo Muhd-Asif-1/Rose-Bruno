@@ -1,0 +1,23 @@
+meta {
+  name: Cancel Booking
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/app/provider/bookings/{{bookingId}}/cancel
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "reason": "{{providerCancellationReason}}",
+    "comments": "{{providerCancellationComments}}"
+  }
+}
