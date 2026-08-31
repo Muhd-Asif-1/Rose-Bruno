@@ -1,0 +1,15 @@
+meta {
+  name: Get My Bookings
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/app/customer/bookings?status={{bookingListStatus}}&page={{bookingListPage}}&pageSize={{bookingListPageSize}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}

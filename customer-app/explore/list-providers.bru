@@ -13,11 +13,3 @@ get {
 headers {
   Authorization: Bearer {{customerAccessToken}}
 }
-
-script:post-response {
-  const providers = res.getBody()?.data?.providers;
-
-  if (Array.isArray(providers) && providers[0]?.providerId) {
-    bru.setVar("providerId", providers[0].providerId);
-  }
-}

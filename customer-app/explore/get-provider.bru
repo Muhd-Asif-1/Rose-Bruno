@@ -17,10 +17,6 @@ headers {
 script:post-response {
   const provider = res.getBody()?.data?.provider;
 
-  if (provider?.providerId) {
-    bru.setVar("providerId", provider.providerId);
-  }
-
   if (Array.isArray(provider?.services) && provider.services[0]?._id) {
     const firstService = provider.services[0];
     const secondService = provider.services.find(

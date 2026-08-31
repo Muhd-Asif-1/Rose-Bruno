@@ -18,11 +18,3 @@ body:multipart-form {
   nationalId: @file({{nationalIdPath}})
   selfieVerification: @file({{selfieVerificationPath}})
 }
-
-script:post-response {
-  const data = res.getBody()?.data;
-
-  if (data?.provider?.providerId) {
-    bru.setVar("providerId", data.provider.providerId);
-  }
-}
