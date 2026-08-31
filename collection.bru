@@ -28,11 +28,13 @@ All OTP examples use `123456`, which the local API accepts for development. Requ
 
 The Local environment uses currently seeded category, service, service-area, and replyable-review IDs. Replace an ID if your local database has been reseeded.
 
-Customer review creation requires a bearer token and a completed booking owned by that customer which has not already been reviewed. Provider replies require a bearer token for the provider who owns that review and can be submitted only once.
+Customer review creation requires a bearer token and a completed booking owned by that customer which has not already been reviewed. Booking list and detail responses include `review.canCreate`; show the Rate & Review action only when it is `true`. A submitted review is returned in the same field. Provider replies require a bearer token for the provider who owns that review and can be submitted only once.
 
 Customer booking creation is: **List Providers** → **Get Provider** → **Get Available Slots** → either **Create Booking - Saved Address** or **Create Booking - Map Pin** → **Get Booking Details**. Copy a marketplace-ready provider ID into the editable `providerId` Local-environment variable, then copy one of that provider's active service IDs into the editable `serviceId` variable. Run **Get Provider** to capture a matching same-category `secondServiceId` for that `serviceId`. The slots request captures the first two available timestamps for their combined duration. If `secondServiceId` remains empty, configure another active service in the first service's category before running the multi-service examples. For saved-address booking, run **List Addresses** or **Create Address** first so `addressId` is populated. Set `bookingDate` to a future enabled availability date before fetching slots. The two create requests are alternatives; when both are run, they use different captured slots.
 
 New booking requests contain no payment data. They start with booking `status` and request `requestStatus` set to `pending`; the details endpoint includes `requestExpiresAt` and `remainingSeconds`. If the provider does not respond before the configured timeout, subsequent details responses show `status: cancelled` and `requestStatus: expired`.
+
+Provider booking management is: **Get All Booking Requests** → **Get Booking Details** → **Update Booking Request Status** → **Get All Bookings**. The requests call captures the first pending `bookingId`. Set `providerBookingRequestStatus` to `accepted` or `rejected` before updating it. Accepted requests become `upcoming`; rejected requests become `cancelled`. The provider bookings list accepts `upcoming`, `in_progress`, or `completed` as `providerBookingListStatus`.
 
 ## Current app enums
 

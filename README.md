@@ -21,6 +21,8 @@ Use the source address exactly as returned by **List Source Addresses**. Indian 
 | `bookingScheduledAt`, `mapBookingScheduledAt` | First two available timestamps captured by Get Available Slots | Empty until slots are fetched |
 | `bookingMapAddress`, `bookingMapLatitude`, `bookingMapLongitude` | Direct map-pin location used by the map booking example | Riyadh example |
 | `bookingListStatus`, `bookingListPage`, `bookingListPageSize` | Customer booking-list filter and pagination values | `upcoming`, `1`, `15` |
+| `providerBookingListStatus`, `providerBookingListPage`, `providerBookingListPageSize` | Provider booking-list filter and pagination values | `upcoming`, `1`, `15` |
+| `providerBookingRequestStatus` | Provider action for a pending request | `accepted` or `rejected` |
 
 ## Required sequences
 
@@ -42,6 +44,15 @@ Create Review requires an authenticated customer and an owned, completed booking
 6. Run **Get My Bookings** to fetch the authenticated customer's paginated booking cards. The `upcoming` filter includes both pending provider requests and accepted upcoming bookings while preserving each booking's stored `status` and `requestStatus`.
 
 The two create requests intentionally use different captured slots. Both send a `serviceIds` array; every selected service must be unique, active, owned by the selected provider, and belong to the same category. Booking bodies contain no payment method or transaction data.
+
+## Provider booking sequence
+
+1. Log in as an active, KYC-approved provider so `providerAccessToken` is populated.
+2. Run **Get All Booking Requests** to fetch pending requests and capture its first `bookingId`.
+3. Run **Get Booking Details** to inspect the selected request, then set `providerBookingRequestStatus` to `accepted` or `rejected` and run **Update Booking Request Status**.
+4. Run **Get All Bookings** with `providerBookingListStatus` set to `upcoming`, `in_progress`, or `completed`.
+
+Only pending, non-expired requests can be accepted or rejected. An accepted request becomes an upcoming booking; a rejected request becomes cancelled.
 
 ## Enums
 

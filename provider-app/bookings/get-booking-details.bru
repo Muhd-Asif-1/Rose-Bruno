@@ -1,0 +1,15 @@
+meta {
+  name: Get Booking Details
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/app/provider/bookings/{{bookingId}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}

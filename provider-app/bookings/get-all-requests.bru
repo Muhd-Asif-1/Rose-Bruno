@@ -1,0 +1,23 @@
+meta {
+  name: Get All Booking Requests
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/provider/bookings/requests?page={{providerBookingListPage}}&pageSize={{providerBookingListPageSize}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
+
+script:post-response {
+  const booking = res.getBody()?.data?.items?.[0];
+
+  if (booking?._id) {
+    bru.setVar("bookingId", booking._id);
+  }
+}

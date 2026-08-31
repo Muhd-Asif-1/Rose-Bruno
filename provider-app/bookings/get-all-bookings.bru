@@ -1,0 +1,15 @@
+meta {
+  name: Get All Bookings
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/app/provider/bookings?status={{providerBookingListStatus}}&page={{providerBookingListPage}}&pageSize={{providerBookingListPageSize}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
