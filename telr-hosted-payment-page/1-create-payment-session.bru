@@ -17,7 +17,7 @@ headers {
 body:json {
   {
     "method": "create",
-    "store": {{telrStoreId}},
+    "store": "{{telrStoreId}}",
     "authkey": "{{telrAuthKey}}",
     "order": {
       "cartid": "{{telrCartId}}",
@@ -54,5 +54,5 @@ script:post-response {
 }
 
 docs {
-Creates a short-lived Telr checkout session. A successful response contains `order.ref` and `order.url`; Bruno saves both for the next step. Open or redirect the shopper to `telrPaymentUrl` immediately. If Telr responds with an error such as a duplicate transaction, change `telrCartId` and try again.
+Creates a short-lived Telr checkout session. Before sending, fill `telrStoreId` and `telrAuthKey` in the selected environment; the Store ID must contain digits only. A successful response contains `order.ref` and `order.url`; Bruno saves both for the next step. Open or redirect the shopper to `telrPaymentUrl` immediately. If Telr responds with an error such as a duplicate transaction, change `telrCartId` and try again.
 }
