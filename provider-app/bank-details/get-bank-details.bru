@@ -1,0 +1,15 @@
+meta {
+  name: Get Bank Details
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/app/provider/bank-details
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}

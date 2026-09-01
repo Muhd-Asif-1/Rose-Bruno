@@ -24,6 +24,8 @@ Provider registration is: **Get Categories** → **Register Request OTP** → **
 
 An active KYC-approved provider can add portfolio images one at a time using **Add Portfolio Photo**. The response captures the new `portfolioPhotoId`, which **Delete Portfolio Photo** uses to remove that image.
 
+An active KYC-approved provider can submit one Saudi payout account using **Add Bank Details**, then use **Get Bank Details** to retrieve its bank name and masked IBAN. Account details cannot be edited or replaced through the API.
+
 All OTP examples use `123456`, which the local API accepts for development. Request/response scripts keep customer and provider session, OTP, and bearer-token variables separate.
 
 The Local environment uses currently seeded category, service, service-area, and replyable-review IDs. Replace an ID if your local database has been reseeded.

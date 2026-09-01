@@ -1,0 +1,24 @@
+meta {
+  name: Add Bank Details
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/app/provider/bank-details
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "bankName": "{{providerBankName}}",
+    "accountHolderName": "{{providerBankAccountHolderName}}",
+    "iban": "{{providerBankIban}}"
+  }
+}
