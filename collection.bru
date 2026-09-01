@@ -28,6 +28,8 @@ An active KYC-approved provider can submit one Saudi payout account using **Add 
 
 An active KYC-approved provider can submit a named image with **Upload Document**. **Get Documents** returns custom uploads together with the National ID front/back images and selfie verification captured during registration. Custom document names must be unique per provider.
 
+Providers use **Toggle Availability Status** to switch their marketplace availability on or off. Switching online requires at least one active service and a saved availability schedule with an enabled day; otherwise the API returns 422. Offline providers are hidden from the marketplace and cannot receive bookings.
+
 All OTP examples use `123456`, which the local API accepts for development. Request/response scripts keep customer and provider session, OTP, and bearer-token variables separate.
 
 The Local environment uses currently seeded category, service, service-area, and replyable-review IDs. Replace an ID if your local database has been reseeded.

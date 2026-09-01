@@ -1,0 +1,15 @@
+meta {
+  name: Toggle Availability Status
+  type: http
+  seq: 1
+}
+
+patch {
+  url: {{baseUrl}}/app/provider/availability-status
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
