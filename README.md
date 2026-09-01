@@ -23,6 +23,7 @@ Use the source address exactly as returned by **List Source Addresses**. Indian 
 | `bookingListStatus`, `bookingListPage`, `bookingListPageSize` | Customer booking-list filter and pagination values | `upcoming`, `1`, `15` |
 | `providerBookingListStatus`, `providerBookingListPage`, `providerBookingListPageSize` | Provider booking-list filter and pagination values | `upcoming`, `1`, `15` |
 | `providerBookingRequestStatus` | Provider action for a pending request | `accepted` or `rejected` |
+| `providerCancellationReason` / `providerCancellationComments` | Provider cancellation reason and optional details | `personal_emergency` / Example text |
 
 ## Required sequences
 
@@ -51,8 +52,11 @@ The two create requests intentionally use different captured slots. Both send a 
 2. Run **Get All Booking Requests** to fetch pending requests and capture its first `bookingId`.
 3. Run **Get Booking Details** to inspect the selected request, then set `providerBookingRequestStatus` to `accepted` or `rejected` and run **Update Booking Request Status**.
 4. Run **Get All Bookings** with `providerBookingListStatus` set to `upcoming`, `in_progress`, or `completed`.
+5. For an upcoming booking, run **Cancel Booking**. It requires one of `personal_emergency`, `health_issue`, `equipment_or_supply_issue`, `scheduling_conflict`, `unable_to_reach_location`, or `other`; comments are optional.
 
 Only pending, non-expired requests can be accepted or rejected. An accepted request becomes an upcoming booking; a rejected request becomes cancelled.
+
+Provider details returned by **Get Provider** include a paginated `reviews` section containing active customer reviews. Add `reviewsPage` and `reviewsPageSize` to the request URL when more results are needed; their defaults are `1` and `10`.
 
 ## Enums
 
