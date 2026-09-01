@@ -23,6 +23,7 @@ Use the source address exactly as returned by **List Source Addresses**. Indian 
 | `bookingListStatus`, `bookingListPage`, `bookingListPageSize` | Customer booking-list filter and pagination values | `upcoming`, `1`, `15` |
 | `providerBookingListStatus`, `providerBookingListPage`, `providerBookingListPageSize` | Provider booking-list filter and pagination values | `upcoming`, `1`, `15` |
 | `providerBookingRequestStatus` | Provider action for a pending request | `accepted` or `rejected` |
+| `customerCancellationReason` / `customerCancellationComments` | Customer cancellation reason and optional details | `customer_request` / Example text |
 | `providerCancellationReason` / `providerCancellationComments` | Provider cancellation reason and optional details | `personal_emergency` / Example text |
 
 ## Required sequences
@@ -43,6 +44,7 @@ Create Review requires an authenticated customer and an owned, completed booking
 4. For a saved address, run **List Addresses** or **Create Address**, followed by **Create Booking - Saved Address**. Alternatively, run **Create Booking - Map Pin** with the map variables.
 5. Run **Get Booking Details** with the captured `bookingId` to inspect the pending countdown and, after the configured timeout, the automatic expired/cancelled transition.
 6. Run **Get My Bookings** to fetch the authenticated customer's paginated booking cards. The `upcoming` filter includes both pending provider requests and accepted upcoming bookings while preserving each booking's stored `status` and `requestStatus`.
+7. Run **Cancel Booking** to withdraw a pending request at any time, or cancel an accepted upcoming booking before the configured customer cancellation window. The body accepts `customer_request` or `other` and optional comments.
 
 The two create requests intentionally use different captured slots. Both send a `serviceIds` array; every selected service must be unique, active, owned by the selected provider, and belong to the same category. Booking bodies contain no payment method or transaction data.
 
@@ -52,7 +54,8 @@ The two create requests intentionally use different captured slots. Both send a 
 2. Run **Get All Booking Requests** to fetch pending requests and capture its first `bookingId`.
 3. Run **Get Booking Details** to inspect the selected request, then set `providerBookingRequestStatus` to `accepted` or `rejected` and run **Update Booking Request Status**.
 4. Run **Get All Bookings** with `providerBookingListStatus` set to `upcoming`, `in_progress`, or `completed`.
-5. For an upcoming booking, run **Cancel Booking**. It requires one of `personal_emergency`, `health_issue`, `equipment_or_supply_issue`, `scheduling_conflict`, `unable_to_reach_location`, or `other`; comments are optional.
+5. For an accepted upcoming booking, run **Start Upcoming Booking** to change its status to `in_progress`.
+6. For an upcoming booking, run **Cancel Booking**. It requires one of `personal_emergency`, `health_issue`, `equipment_or_supply_issue`, `scheduling_conflict`, `unable_to_reach_location`, or `other`; comments are optional.
 
 Only pending, non-expired requests can be accepted or rejected. An accepted request becomes an upcoming booking; a rejected request becomes cancelled.
 
