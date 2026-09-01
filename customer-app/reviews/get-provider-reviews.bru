@@ -1,0 +1,15 @@
+meta {
+  name: Get Provider Reviews
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/app/customer/reviews/provider/{{providerId}}?page={{reviewListPage}}&pageSize={{reviewListPageSize}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
