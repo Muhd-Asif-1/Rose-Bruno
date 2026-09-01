@@ -1,0 +1,31 @@
+meta {
+  name: Send Text Message
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/app/customer/bookings/{{bookingId}}/messages
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "clientMessageId": "{{customerChatClientMessageId}}",
+    "type": "text",
+    "text": "{{chatText}}"
+  }
+}
+
+script:post-response {
+  const message = res.getBody()?.data?.message;
+  if (message?._id) {
+    bru.setVar("chatMessageId", message._id);
+  }
+}

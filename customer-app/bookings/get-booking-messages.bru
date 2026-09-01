@@ -1,0 +1,28 @@
+meta {
+  name: Get Booking Messages
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{baseUrl}}/app/customer/bookings/{{bookingId}}/messages?pageSize={{chatPageSize}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
+
+script:post-response {
+  const messages = res.getBody()?.data?.items;
+  const latest = Array.isArray(messages) ? messages[messages.length - 1] : null;
+  const image = Array.isArray(messages) ? messages.find((message) => message.type === "image") : null;
+
+  if (latest?._id) {
+    bru.setVar("chatMessageId", latest._id);
+  }
+  if (image?._id) {
+    bru.setVar("chatImageMessageId", image._id);
+  }
+}

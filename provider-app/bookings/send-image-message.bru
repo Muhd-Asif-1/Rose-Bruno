@@ -1,0 +1,30 @@
+meta {
+  name: Send Image Message
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{baseUrl}}/app/provider/bookings/{{bookingId}}/messages
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
+
+body:multipart-form {
+  clientMessageId: {{providerChatImageClientMessageId}}
+  type: image
+  caption: {{chatCaption}}
+  image: @file({{chatImagePath}})
+}
+
+script:post-response {
+  const message = res.getBody()?.data?.message;
+  if (message?._id) {
+    bru.setVar("chatMessageId", message._id);
+    bru.setVar("chatImageMessageId", message._id);
+  }
+}

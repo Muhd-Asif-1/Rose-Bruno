@@ -25,6 +25,9 @@ Use the source address exactly as returned by **List Source Addresses**. Indian 
 | `providerBookingRequestStatus` | Provider action for a pending request | `accepted` or `rejected` |
 | `customerCancellationReason` / `customerCancellationComments` | Customer cancellation reason and optional details | `customer_request` / Example text |
 | `providerCancellationReason` / `providerCancellationComments` | Provider cancellation reason and optional details | `personal_emergency` / Example text |
+| `chatMessageId`, `chatImageMessageId`, `chatPageSize` | Booking-chat pagination/read/image identifiers | Captured / `30` |
+| `chatText`, `chatCaption`, `chatImagePath` | Text and private image-message example content | Example values |
+| `customerChatClientMessageId`, `providerChatClientMessageId` and image variants | Idempotency UUIDs for chat sends; change them to create another message | Example UUIDs |
 
 ## Required sequences
 
@@ -58,6 +61,12 @@ The two create requests intentionally use different captured slots. Both send a 
 6. For an upcoming booking, run **Cancel Booking**. It requires one of `personal_emergency`, `health_issue`, `equipment_or_supply_issue`, `scheduling_conflict`, `unable_to_reach_location`, or `other`; comments are optional.
 
 Only pending, non-expired requests can be accepted or rejected. An accepted request becomes an upcoming booking; a rejected request becomes cancelled.
+
+## Booking chat sequence
+
+Chat is available only after a request is accepted and while its booking is `upcoming` or `in_progress`. From either app, run **Get Booking Messages**, **Send Text Message** or **Send Image Message**, and **Mark Booking Messages Read**. **Download Message Image** verifies that image bytes require the authenticated booking participant. Change the relevant client-message UUID before sending another message; repeating one UUID returns the original message without creating a duplicate.
+
+Connect Socket.IO to `{{baseUrl}}` with `/api` removed, using namespace `/chat` and handshake auth `{ token, role }`, where `role` is `customer` or `provider`. Listen for `chat:message`, `chat:read`, and `chat:presence`. REST remains the source of truth for sending, history, read updates, and reconnect recovery. Completed or cancelled accepted bookings retain read-only history but reject new messages.
 
 Provider details returned by **Get Provider** include a paginated `reviews` section containing active customer reviews. Add `reviewsPage` and `reviewsPageSize` to the request URL when more results are needed; their defaults are `1` and `10`.
 

@@ -1,0 +1,22 @@
+meta {
+  name: Mark Booking Messages Read
+  type: http
+  seq: 10
+}
+
+patch {
+  url: {{baseUrl}}/app/provider/bookings/{{bookingId}}/messages/read
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "throughMessageId": "{{chatMessageId}}"
+  }
+}

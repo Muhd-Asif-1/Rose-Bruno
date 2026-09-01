@@ -40,6 +40,8 @@ Provider booking management is: **Get All Booking Requests** → **Get Booking D
 
 Providers can cancel only their own upcoming bookings through **Cancel Booking**. The request requires one of: `personal_emergency`, `health_issue`, `equipment_or_supply_issue`, `scheduling_conflict`, `unable_to_reach_location`, or `other`; `comments` are optional. Booking responses include `canCancel` for showing the cancellation action.
 
+Accepted upcoming and in-progress bookings support private customer/provider chat. REST requests cover history, text, one JPG/PNG/WebP image up to 5 MB with optional caption, read-through receipts, and authenticated image download. Booking responses expose `chat.canAccess`, `chat.canSend`, and `chat.unreadCount`; booking details also expose counterpart presence. Socket.IO uses namespace `/chat`, handshake auth `{ token, role }`, and emits `chat:message`, `chat:read`, and `chat:presence`. Closed bookings keep read-only history.
+
 ## Current app enums
 
 | Field | Values |
