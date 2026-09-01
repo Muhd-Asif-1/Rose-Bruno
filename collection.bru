@@ -36,6 +36,14 @@ Customer booking creation is: **List Providers** → **Get Provider** → **Get 
 
 New booking requests contain no payment data. They start with booking `status` and request `requestStatus` set to `pending`; the details endpoint includes `requestExpiresAt` and `remainingSeconds`. If the provider does not respond before the configured timeout, subsequent details responses show `status: cancelled` and `requestStatus: expired`.
 
+## Telr Hosted Payment Page
+
+The `telr-hosted-payment-page` folder demonstrates Telr's redirect checkout flow without storing or sending card details through Rose. Select the **Telr Sandbox** environment, enter the Store ID and Authentication Key supplied by Telr, and use a unique `telrCartId` for every create-session attempt.
+
+Run **1. Create payment session** from your server after creating a Rose booking/order. It saves Telr's `order.ref` and `order.url`. Redirect the shopper's browser to `telrPaymentUrl` immediately; do not mark the Rose order as paid based only on the browser return URL. After Telr redirects to the authorised, declined, or cancelled URL, run **2. Check payment status** (or have the backend run the same request) and use the returned payment status to update your local order.
+
+The collection uses `test: "1"`, which keeps the example in Telr test mode. Change it only after Telr has enabled and configured the live account. Credentials are intentionally environment variables and must never be committed.
+
 Provider booking management is: **Get All Booking Requests** → **Get Booking Details** → **Update Booking Request Status** → **Get All Bookings** → **Start Upcoming Booking**. The requests call captures the first pending `bookingId`. Set `providerBookingRequestStatus` to `accepted` or `rejected` before updating it. Accepted requests become `upcoming`; rejected requests become `cancelled`. Only accepted upcoming bookings can be started, changing their status to `in_progress`. The provider bookings list accepts `upcoming`, `in_progress`, or `completed` as `providerBookingListStatus`.
 
 Providers can cancel only their own upcoming bookings through **Cancel Booking**. The request requires one of: `personal_emergency`, `health_issue`, `equipment_or_supply_issue`, `scheduling_conflict`, `unable_to_reach_location`, or `other`; `comments` are optional. Booking responses include `canCancel` for showing the cancellation action.

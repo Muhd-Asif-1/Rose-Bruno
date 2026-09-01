@@ -1,0 +1,58 @@
+meta {
+  name: 1. Create payment session
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{telrGatewayUrl}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "method": "create",
+    "store": {{telrStoreId}},
+    "authkey": "{{telrAuthKey}}",
+    "order": {
+      "cartid": "{{telrCartId}}",
+      "test": "1",
+      "amount": "{{telrAmount}}",
+      "currency": "{{telrCurrency}}",
+      "description": "{{telrDescription}}"
+    },
+    "return": {
+      "authorised": "{{telrAuthorisedUrl}}",
+      "declined": "{{telrDeclinedUrl}}",
+      "cancelled": "{{telrCancelledUrl}}"
+    },
+    "customer": {
+      "email": "{{telrCustomerEmail}}",
+      "name": {
+        "forenames": "{{telrCustomerForenames}}",
+        "surname": "{{telrCustomerSurname}}"
+      }
+    }
+  }
+}
+
+script:post-response {
+  const order = res.getBody()?.order;
+
+  if (order?.ref) {
+    bru.setVar("telrOrderReference", order.ref);
+  }
+
+  if (order?.url) {
+    bru.setVar("telrPaymentUrl", order.url);
+  }
+}
+
+docs {
+Creates a short-lived Telr checkout session. A successful response contains `order.ref` and `order.url`; Bruno saves both for the next step. Open or redirect the shopper to `telrPaymentUrl` immediately. If Telr responds with an error such as a duplicate transaction, change `telrCartId` and try again.
+}

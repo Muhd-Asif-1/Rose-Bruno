@@ -1,0 +1,16 @@
+meta {
+  name: Telr Hosted Payment Page
+  seq: 99
+}
+
+docs {
+# Telr Hosted Payment Page flow
+
+1. Your backend creates a Telr session with a **unique** cart ID.
+2. Telr responds with `order.ref` and `order.url`. Store the reference against your own booking/order.
+3. Redirect the customer to `order.url`; Telr, not Rose, collects card and 3-D Secure data.
+4. Telr returns the customer to one of the configured return URLs. Treat this only as navigation, not payment confirmation.
+5. Your backend checks the order using `order.ref` and records the final result before providing the paid service.
+
+Use this collection from a trusted backend/development machine only. `telrAuthKey` is a secret. The request body has `test: "1"` to ensure sandbox testing.
+}

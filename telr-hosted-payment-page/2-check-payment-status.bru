@@ -1,0 +1,30 @@
+meta {
+  name: 2. Check payment status
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{telrGatewayUrl}}
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "method": "check",
+    "store": {{telrStoreId}},
+    "authkey": "{{telrAuthKey}}",
+    "order": {
+      "ref": "{{telrOrderReference}}"
+    }
+  }
+}
+
+docs {
+Checks the payment outcome for the Telr order reference saved by **1. Create payment session**. In production, perform this verification on your backend after the customer returns from Telr (and whenever your webhook/return handler needs confirmation). Only update the matching Rose booking/order after validating the returned status and reference.
+}
