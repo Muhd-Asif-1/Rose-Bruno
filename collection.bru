@@ -26,6 +26,8 @@ An active KYC-approved provider can add portfolio images one at a time using **A
 
 An active KYC-approved provider can submit one Saudi payout account using **Add Bank Details**, then use **Get Bank Details** to retrieve its bank name and masked IBAN. Account details cannot be edited or replaced through the API.
 
+An active KYC-approved provider can submit a named image with **Upload Document**. **Get Documents** returns custom uploads together with the National ID front/back images and selfie verification captured during registration. Custom document names must be unique per provider.
+
 All OTP examples use `123456`, which the local API accepts for development. Request/response scripts keep customer and provider session, OTP, and bearer-token variables separate.
 
 The Local environment uses currently seeded category, service, service-area, and replyable-review IDs. Replace an ID if your local database has been reseeded.
