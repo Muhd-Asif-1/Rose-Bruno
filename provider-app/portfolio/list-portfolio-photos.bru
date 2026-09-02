@@ -1,0 +1,24 @@
+meta {
+  name: List Portfolio Photos
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/app/provider/portfolio/photos?page=1&pageSize=15
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
+
+script:post-response {
+  const portfolioPhotos = res.getBody()?.data?.items;
+  const photo = Array.isArray(portfolioPhotos) ? portfolioPhotos[0] : null;
+
+  if (photo?._id) {
+    bru.setVar("portfolioPhotoId", photo._id);
+  }
+}
