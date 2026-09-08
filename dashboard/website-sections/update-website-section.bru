@@ -1,0 +1,20 @@
+meta {
+  name: Update Website Section
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/admin/website-sections/header
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminAccessToken}}
+}
+
+body:multipart-form {
+  sectionKey: header
+  content: {"logo":{"alt":{"en":"Rose logo","ar":""},"url":null},"navigation":[],"ctaLabel":{"en":"Download App","ar":""},"ctaLink":"#download"}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: List Website Sections
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/admin/website-sections
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{adminAccessToken}}
+}
