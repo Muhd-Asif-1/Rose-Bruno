@@ -15,7 +15,7 @@ headers {
 }
 
 script:post-response {
-  const serviceAreas = res.getBody()?.data?.serviceAreas;
+  const serviceAreas = res.getBody()?.data?.items;
   
   if (Array.isArray(serviceAreas) && serviceAreas[0]?._id) {
     bru.setVar("serviceAreaId", serviceAreas[0]._id);
