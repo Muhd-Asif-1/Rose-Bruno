@@ -1,0 +1,25 @@
+meta {
+  name: Submit Website Contact Form
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/website/contact-submissions
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "firstName": "Noor",
+    "lastName": "Al-Qahtani",
+    "email": "noor@example.com",
+    "enquiryType": "Customer Support",
+    "message": "I need help with my booking."
+  }
+}
