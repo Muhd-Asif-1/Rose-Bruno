@@ -63,8 +63,9 @@ Accepted upcoming and in-progress bookings support private customer/provider cha
 | `locale` | `en`, `ar` |
 | customer `gender` | `1` male, `2` female, `3` other |
 | service `gender` | `0` both, `1` men, `2` women |
-| legal `pageKey` (customer) | `1` terms, `2` privacy, `3` cookie |
-| legal `pageKey` (provider) | customer values plus `4` provider agreement |
+| legal `pageKey` (website/provider) | `1` terms of service, `2` privacy policy, `4` provider agreement, `5` refund policy, `6` cancellation policy, `7` service delivery policy |
+| legal `pageKey` (customer) | `1` terms of service, `2` privacy policy, `5` refund policy, `6` cancellation policy, `7` service delivery policy |
+| legal `pageKey` (provider) | `1` terms of service, `2` privacy policy, `4` provider agreement, `5` refund policy, `6` cancellation policy, `7` service delivery policy |
 | provider explore `sortBy` | `1` topRated, `2` nearest, `3` lowestPrice, `4` mostReviewed |
 | availability `bufferMinutes` | `15`, `30`, `45`, `60` |
 | customer address `label` | `1` home, `2` work, `3` other |

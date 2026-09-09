@@ -1,0 +1,11 @@
+meta {
+  name: Get Public Website Legal Page
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/website/legal-pages?pageKey={{legalPageKey}}&locale={{locale}}
+  body: none
+  auth: none
+}
