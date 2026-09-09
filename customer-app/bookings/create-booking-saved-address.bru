@@ -32,9 +32,13 @@ body:json {
 }
 
 script:post-response {
-  const booking = res.getBody()?.data?.booking;
+  const payment = res.getBody()?.data;
 
-  if (booking?._id) {
-    bru.setVar("bookingId", booking._id);
+  if (payment?.paymentIntentId) {
+    bru.setVar("paymentIntentId", payment.paymentIntentId);
+  }
+
+  if (payment?.checkoutUrl) {
+    bru.setVar("checkoutUrl", payment.checkoutUrl);
   }
 }

@@ -1,0 +1,27 @@
+meta {
+  name: Verify payment
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/app/customer/payments/{{paymentIntentId}}/verify
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
+
+script:post-response {
+  const booking = res.getBody()?.data?.booking;
+
+  if (booking?._id) {
+    bru.setVar("bookingId", booking._id);
+  }
+}
+
+docs {
+Call this only after completing Telr checkout. Rose checks the payment with Telr server-to-server; never trust the browser return alone.
+}

@@ -1,0 +1,12 @@
+meta {
+  name: Payments
+  seq: 9
+}
+
+docs {
+# Customer payment flow
+
+Run either booking-create request first. The API returns a private `paymentIntentId` and a Telr `checkoutUrl`; no booking is visible to the provider yet.
+
+Open `checkoutUrl` in the system browser, finish the Telr sandbox checkout, then run **Verify payment**. The API verifies directly with Telr and creates the booking only when the Telr order is paid.
+}
