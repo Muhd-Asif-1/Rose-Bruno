@@ -49,6 +49,8 @@ Create Review requires an authenticated customer and an owned, completed booking
 6. Run **Get My Bookings** to fetch the authenticated customer's paginated booking cards. The `upcoming` filter includes both pending provider requests and accepted upcoming bookings while preserving each booking's stored `status` and `requestStatus`.
 7. Run **Cancel Booking** to withdraw a pending request at any time, or cancel an accepted upcoming booking before the configured customer cancellation window. The body accepts `customer_request` or `other` and optional comments.
 
+For a connected customer app, subscribe to Socket.IO event `booking:status-updated` after payment verification. An accepted request is delivered as `requestStatus: accepted` and `status: upcoming`; a provider rejection is `requestStatus: rejected` and `status: cancelled`; an unanswered request is `requestStatus: expired` and `status: cancelled`. Use the event to transition the pending screen immediately, then re-fetch booking detail on reconnect, foreground, or an unknown/out-of-order event. Do not continuously poll booking status.
+
 The two create requests intentionally use different captured slots. Both send a `serviceIds` array; every selected service must be unique, active, owned by the selected provider, and belong to the same category. Booking bodies contain no payment method or transaction data.
 
 ## Provider booking sequence
@@ -67,6 +69,8 @@ Only pending, non-expired requests can be accepted or rejected. An accepted requ
 Chat is available only after a request is accepted and while its booking is `upcoming` or `in_progress`. From either app, run **Get Booking Messages**, **Send Text Message** or **Send Image Message**, and **Mark Booking Messages Read**. **Download Message Image** verifies that image bytes require the authenticated booking participant. Change the relevant client-message UUID before sending another message; repeating one UUID returns the original message without creating a duplicate.
 
 Connect Socket.IO to `{{baseUrl}}` with `/api` removed, using namespace `/chat` and handshake auth `{ token, role }`, where `role` is `customer` or `provider`. Listen for `chat:message`, `chat:read`, and `chat:presence`. REST remains the source of truth for sending, history, read updates, and reconnect recovery. Completed or cancelled accepted bookings retain read-only history but reject new messages.
+
+The same authenticated socket emits `booking:status-updated` to both booking participants when a request is created, accepted, rejected, expired, started, completed, or cancelled. Its payload is `{ bookingId, bookingNumber, paymentStatus, providerRespondedAt, requestExpiresAt, requestStatus, status, updatedAt }`. All timestamps are ISO-8601 strings on the wire. This is a notification payload, not full booking detail: fetch `GET /app/customer/bookings/:id` or `GET /app/provider/bookings/:id` to reconcile after reconnect or whenever the local state is uncertain.
 
 Provider details returned by **Get Provider** include a paginated `reviews` section containing active customer reviews. Add `reviewsPage` and `reviewsPageSize` to the request URL when more results are needed; their defaults are `1` and `10`.
 
