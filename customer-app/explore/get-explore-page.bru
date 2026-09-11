@@ -1,0 +1,15 @@
+meta {
+  name: Get Explore Page
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/app/customer/explore/page?page=1&pageSize=15&categoryId={{specialtyId}}&gender=1&distanceFrom=1&distanceTo=5&priceFrom=50&priceTo=500&minRating=4&sortBy=1
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
