@@ -18,8 +18,11 @@ Use the source address exactly as returned by **List Source Addresses**. Indian 
 | `customerSessionToken` / `providerSessionToken` | Captured OTP-flow sessions; never interchangeable | Empty until an OTP is requested |
 | `specialtyId`, `providerId`, `serviceId`, `secondServiceId`, `serviceAreaId`, `bookingId`, `reviewId` | IDs captured by requests or editable seeded fallbacks | Mixed |
 | `bookingDate` | Future Riyadh date used to generate available booking slots | `2026-09-01` |
-| `bookingScheduledAt`, `mapBookingScheduledAt` | First two available timestamps captured by Get Available Slots | Empty until slots are fetched |
-| `bookingMapAddress`, `bookingMapLatitude`, `bookingMapLongitude` | Direct map-pin location used by the map booking example | Riyadh example |
+| `bookingScheduledAt`, `customBookingScheduledAt` | First two available timestamps captured by Get Available Slots | Empty until slots are fetched |
+| `bookingCustomAddress`, `bookingCustomLatitude`, `bookingCustomLongitude` | Temporary location used by the custom-location booking and discovery examples | Riyadh example |
+| `customerHomeAddress`, `customerHomeLatitude`, `customerHomeLongitude` | Registration location saved automatically as Home | Riyadh example |
+| `addressText`, `addressLatitude`, `addressLongitude` | Saved-address fields used by Create Address | Riyadh example |
+| `globalServiceRadius` | Whole-number discovery and booking radius used by Update Global Service Radius | `15` |
 | `bookingListStatus`, `bookingListPage`, `bookingListPageSize` | Customer booking-list filter and pagination values | `upcoming`, `1`, `15` |
 | `providerBookingListStatus`, `providerBookingListPage`, `providerBookingListPageSize` | Provider booking-list filter and pagination values | `upcoming`, `1`, `15` |
 | `providerBookingRequestStatus` | Provider action for a pending request | `accepted` or `rejected` |
@@ -31,7 +34,7 @@ Use the source address exactly as returned by **List Source Addresses**. Indian 
 
 ## Required sequences
 
-Customer registration: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. The final request captures `customerAccessToken`. Existing customers use the login request/verify pair. Provider registration: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. This creates a pending provider; only an active provider login returns `providerAccessToken`.
+Customer registration: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. The final request sends `homeAddress` with a formatted address and coordinates, creates the customer's Home address, and captures `customerAccessToken`. Existing customers use the login request/verify pair. Provider registration: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. Registration sends `serviceArea` and creates an active `Primary Service Area`. This creates a pending provider; only an active provider login returns `providerAccessToken`.
 
 The local development API accepts OTP `123456`. Resend requests apply only to active register/login OTP sessions. Do not reuse customer variables in provider requests or vice versa.
 
@@ -43,8 +46,8 @@ Create Review requires an authenticated customer and an owned, completed booking
 
 1. Log in as a customer so `customerAccessToken` is populated.
 2. Run **List Providers**, copy a marketplace-ready provider ID into the editable `providerId` Local-environment variable, then run **Get Provider** to capture two active services from the same category in `serviceId` and `secondServiceId`. If no same-category pair exists, create or activate another service before continuing.
-3. Set `bookingDate` to a future date on which that provider is enabled, then run **Get Available Slots**. It calculates availability from the summed service duration, applies one provider buffer after the bundle, and captures the first slot in `bookingScheduledAt` and the second in `mapBookingScheduledAt`.
-4. For a saved address, run **List Addresses** or **Create Address**, followed by **Create Booking - Saved Address**. Alternatively, run **Create Booking - Map Pin** with the map variables.
+3. Set `bookingDate` to a future date on which that provider is enabled, then run **Get Available Slots**. It calculates availability from the summed service duration, applies one provider buffer after the bundle, and captures the first slot in `bookingScheduledAt` and the second in `customBookingScheduledAt`.
+4. For a saved address, run **List Addresses** or **Create Address**, followed by **Create Booking - Saved Address**. Alternatively, run **Create Booking - Custom Location** with the custom-location variables. Coverage is checked against the provider's nearest active service area before a Telr checkout is created.
 5. Run **Get Booking Details** with the captured `bookingId` to inspect the pending countdown and, after the configured timeout, the automatic expired/cancelled transition.
 6. Run **Get My Bookings** to fetch the authenticated customer's paginated booking cards. The `upcoming` filter includes both pending provider requests and accepted upcoming bookings while preserving each booking's stored `status` and `requestStatus`.
 7. Run **Cancel Booking** to withdraw a pending request at any time, or cancel an accepted upcoming booking before the configured customer cancellation window. The body accepts `customer_request` or `other` and optional comments.
@@ -112,10 +115,10 @@ Provider details returned by **Get Provider** include a paginated `reviews` sect
 
 | Value | Meaning |
 | --- | --- |
-| `1` (`topRated`) | Top rated (placeholder; sorting is not active yet) |
-| `2` (`nearest`) | Nearest (placeholder; sorting is not active yet) |
-| `3` (`lowestPrice`) | Lowest price (placeholder; sorting is not active yet) |
-| `4` (`highestPrice`) | Highest price (placeholder; sorting is not active yet) |
+| `1` (`topRated`) | Highest rating, then review/rating count, then distance |
+| `2` (`nearest`) | Nearest active provider service area |
+| `3` (`lowestPrice`) | Lowest matching service price |
+| `4` (`highestPrice`) | Highest matching service price |
 
 ### Availability
 

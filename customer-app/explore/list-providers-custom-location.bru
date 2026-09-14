@@ -1,0 +1,15 @@
+meta {
+  name: List Providers - Custom Location
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/app/customer/explore/providers?page=1&pageSize=15&sortBy=2&maxDistance=10&locationType=custom&address={{bookingCustomAddress}}&latitude={{bookingCustomLatitude}}&longitude={{bookingCustomLongitude}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}

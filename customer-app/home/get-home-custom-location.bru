@@ -1,0 +1,15 @@
+meta {
+  name: Get Homepage - Custom Location
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/app/customer/home?locationType=custom&address={{bookingCustomAddress}}&latitude={{bookingCustomLatitude}}&longitude={{bookingCustomLongitude}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}

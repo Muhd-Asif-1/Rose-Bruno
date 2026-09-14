@@ -1,5 +1,5 @@
 meta {
-  name: Create Booking - Map Pin
+  name: Create Booking - Custom Location
   type: http
   seq: 3
 }
@@ -22,13 +22,13 @@ body:json {
       "{{serviceId}}",
       "{{secondServiceId}}"
     ],
-    "scheduledAt": "{{mapBookingScheduledAt}}",
+    "scheduledAt": "{{customBookingScheduledAt}}",
     "specialInstructions": "{{bookingSpecialInstructions}}",
     "location": {
-      "type": "map_pin",
-      "address": "{{bookingMapAddress}}",
-      "latitude": {{bookingMapLatitude}},
-      "longitude": {{bookingMapLongitude}}
+      "type": "custom",
+      "address": "{{bookingCustomAddress}}",
+      "latitude": {{bookingCustomLatitude}},
+      "longitude": {{bookingCustomLongitude}}
     }
   }
 }

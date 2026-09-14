@@ -22,6 +22,6 @@ script:post-response {
   }
 
   if (Array.isArray(slots) && slots[1]?.scheduledAt) {
-    bru.setVar("mapBookingScheduledAt", slots[1].scheduledAt);
+    bru.setVar("customBookingScheduledAt", slots[1].scheduledAt);
   }
 }
