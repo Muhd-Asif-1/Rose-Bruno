@@ -1,0 +1,15 @@
+meta {
+  name: Get Service Price Range
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/app/customer/explore/price-range
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
