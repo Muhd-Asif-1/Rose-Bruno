@@ -1,11 +1,11 @@
 meta {
-  name: Get Homepage - Saved Address
+  name: Get Homepage - Current Location
   type: http
   seq: 2
 }
 
 get {
-  url: {{baseUrl}}/app/customer/home?locationType=saved_address&locationId={{addressId}}
+  url: {{baseUrl}}/app/customer/home?address={{customerHomeAddress}}&latitude={{customerHomeLatitude}}&longitude={{customerHomeLongitude}}
   body: none
   auth: none
 }

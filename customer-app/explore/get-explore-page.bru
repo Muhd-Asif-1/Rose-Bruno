@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/app/customer/explore/page?page=1&pageSize=15&categoryId={{specialtyId}}&gender=1&distanceFrom=1&distanceTo=5&priceFrom=50&priceTo=500&minRating=4&sortBy=1
+  url: {{baseUrl}}/app/customer/explore/page?page=1&pageSize=15&categoryId={{specialtyId}}&gender=1&distanceFrom=1&distanceTo=5&priceFrom=50&priceTo=500&minRating=4&sortBy=1&address={{customerHomeAddress}}&latitude={{customerHomeLatitude}}&longitude={{customerHomeLongitude}}
   body: none
   auth: none
 }

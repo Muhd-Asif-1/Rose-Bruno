@@ -1,11 +1,11 @@
 meta {
-  name: List Providers - Saved Address
+  name: List Providers - Current Location
   type: http
   seq: 4
 }
 
 get {
-  url: {{baseUrl}}/app/customer/explore/providers?page=1&pageSize=15&sortBy=2&maxDistance=10&locationType=saved_address&locationId={{addressId}}
+  url: {{baseUrl}}/app/customer/explore/providers?page=1&pageSize=15&sortBy=2&maxDistance=10&address={{customerHomeAddress}}&latitude={{customerHomeLatitude}}&longitude={{customerHomeLongitude}}
   body: none
   auth: none
 }
