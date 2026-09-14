@@ -45,7 +45,7 @@ Create Review requires an authenticated customer and an owned, completed booking
 ## Customer booking sequence
 
 1. Log in as a customer so `customerAccessToken` is populated.
-2. Run **List Providers**, copy a marketplace-ready provider ID into the editable `providerId` Local-environment variable, then run **Get Provider** to capture two active services from the same category in `serviceId` and `secondServiceId`. If no same-category pair exists, create or activate another service before continuing.
+2. Run **List Providers**, copy a marketplace-ready provider ID into the editable `providerId` Local-environment variable, then run **Get Provider** to capture two distinct active services in `serviceId` and `secondServiceId`.
 3. Set `bookingDate` to a future date on which that provider is enabled, then run **Get Available Slots**. It calculates availability from the summed service duration, applies one provider buffer after the bundle, and captures the first slot in `bookingScheduledAt` and the second in `customBookingScheduledAt`.
 4. For a saved address, run **List Addresses** or **Create Address**, followed by **Create Booking - Saved Address**. Alternatively, run **Create Booking - Custom Location** with the custom-location variables. Coverage is checked against the provider's nearest active service area before a Telr checkout is created.
 5. Run **Get Booking Details** with the captured `bookingId` to inspect the pending countdown and, after the configured timeout, the automatic expired/cancelled transition.
@@ -54,7 +54,7 @@ Create Review requires an authenticated customer and an owned, completed booking
 
 For a connected customer app, subscribe to Socket.IO event `booking:status-updated` after payment verification. An accepted request is delivered as `requestStatus: accepted` and `status: upcoming`; a provider rejection is `requestStatus: rejected` and `status: cancelled`; an unanswered request is `requestStatus: expired` and `status: cancelled`. Use the event to transition the pending screen immediately, then re-fetch booking detail on reconnect, foreground, or an unknown/out-of-order event. Do not continuously poll booking status.
 
-The two create requests intentionally use different captured slots. Both send a `serviceIds` array; every selected service must be unique, active, owned by the selected provider, and belong to the same category. Booking bodies contain no payment method or transaction data.
+The two create requests intentionally use different captured slots. Both send a `serviceIds` array; every selected service must be unique, active, and owned by the selected provider. Services may belong to different categories; commission is calculated per service. Booking bodies contain no payment method or transaction data.
 
 ## Provider booking sequence
 
