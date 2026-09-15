@@ -24,7 +24,7 @@ body:json {
 script:post-response {
   const data = res.getBody()?.data;
   
-  if (data?.sessionToken) {
-    bru.setVar("customerSessionToken", data.sessionToken);
+  if (data?.accessToken) {
+    bru.setVar("customerAccessToken", data.accessToken);
   }
 }

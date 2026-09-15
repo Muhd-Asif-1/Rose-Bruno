@@ -1,18 +1,18 @@
 meta {
-  name: Register Update Location
+  name: Update Current Location
   type: http
   seq: 3
 }
 
 patch {
-  url: {{baseUrl}}/app/customer/auth/register/update-location
+  url: {{baseUrl}}/app/customer/auth/current-location
   body: json
   auth: none
 }
 
 headers {
+  Authorization: Bearer {{customerAccessToken}}
   Content-Type: application/json
-  sessionToken: {{customerSessionToken}}
 }
 
 body:json {
@@ -22,13 +22,5 @@ body:json {
       "latitude": {{customerHomeLatitude}},
       "longitude": {{customerHomeLongitude}}
     }
-  }
-}
-
-script:post-response {
-  const data = res.getBody()?.data;
-  
-  if (data?.accessToken) {
-    bru.setVar("customerAccessToken", data.accessToken);
   }
 }
