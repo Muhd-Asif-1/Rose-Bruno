@@ -1,0 +1,15 @@
+meta {
+  name: List Settlements
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/provider/settlements?page={{settlementPage}}&pageSize={{settlementPageSize}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}

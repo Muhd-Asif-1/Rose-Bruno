@@ -1,0 +1,24 @@
+meta {
+  name: Update Profile
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/app/provider/auth/profile
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
+
+body:multipart-form {
+  fullName: {{fullName}}
+  bio: {{providerBio}}
+  serviceLocation.address: {{providerAddress}}
+  serviceLocation.latitude: {{providerLatitude}}
+  serviceLocation.longitude: {{providerLongitude}}
+  specialties[]: {{specialtyId}}
+}

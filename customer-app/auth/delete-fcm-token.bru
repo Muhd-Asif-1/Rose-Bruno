@@ -1,0 +1,22 @@
+meta {
+  name: Delete FCM Token
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{baseUrl}}/app/customer/auth/fcm-token
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "token": "{{fcmToken}}"
+  }
+}

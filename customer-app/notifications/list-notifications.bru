@@ -1,0 +1,15 @@
+meta {
+  name: List Notifications
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/customer/notifications?page={{notificationListPage}}&pageSize={{notificationListPageSize}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}

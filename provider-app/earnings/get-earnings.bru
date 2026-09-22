@@ -1,0 +1,15 @@
+meta {
+  name: Get Earnings
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/app/provider/earnings?period={{earningsPeriod}}&page={{earningsPage}}&pageSize={{earningsPageSize}}
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}

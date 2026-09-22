@@ -1,0 +1,24 @@
+meta {
+  name: Save FCM Token
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/app/provider/auth/fcm-token
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "token": "{{fcmToken}}",
+    "platform": "{{notificationPlatform}}",
+    "locale": "{{locale}}"
+  }
+}

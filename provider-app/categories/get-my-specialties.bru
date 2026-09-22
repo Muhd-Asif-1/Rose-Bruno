@@ -1,0 +1,15 @@
+meta {
+  name: Get My Specialties
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/app/provider/categories/my-specialties
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}

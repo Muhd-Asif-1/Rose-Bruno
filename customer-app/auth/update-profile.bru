@@ -1,0 +1,21 @@
+meta {
+  name: Update Profile
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/app/customer/auth/profile
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{customerAccessToken}}
+}
+
+body:multipart-form {
+  fullName: {{fullName}}
+  email: {{email}}
+  gender: {{customerGender}}
+}
