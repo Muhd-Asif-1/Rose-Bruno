@@ -40,7 +40,7 @@ Customer checkout is: **List Providers** → **Get Provider** → **Get Availabl
 
 Home and Explore use the active Home address when no location query is supplied. The collection also includes saved-address and custom-location examples. Discovery responses return `distanceKm` and `nearestServiceArea`; the admin **Get Configuration** and **Update Global Service Radius** requests inspect and change the shared radius immediately.
 
-**Get Provider** includes an active-review `reviews` section. It contains the reviewer's name and image, rating, review text, and creation date, with pagination metadata. Use optional `reviewsPage` and `reviewsPageSize` query parameters (defaults: `1` and `10`) to load further reviews.
+**Get Provider** includes an active-review `reviews` section. It contains the reviewer's name and image, rating, review text, provider reply (or `null` when none is publicly active), and creation date, with pagination metadata. Use optional `reviewsPage` and `reviewsPageSize` query parameters (defaults: `1` and `10`) to load further reviews.
 
 Verified booking requests start with booking `status` and request `requestStatus` set to `pending`; the provider-response timer begins only after Telr confirms payment. If the provider does not respond before the configured timeout, subsequent details responses show `status: cancelled` and `requestStatus: expired`. Until Telr Remote API refunds are enabled, a paid rejection, cancellation, or expiry is marked for manual refund in the Telr dashboard.
 

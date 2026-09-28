@@ -79,7 +79,7 @@ Connect Socket.IO to `{{baseUrl}}` with `/api` removed, using namespace `/chat` 
 
 The same authenticated socket emits `booking:status-updated` to both booking participants when a request is created, accepted, rejected, expired, started, completed, or cancelled. Its payload is `{ bookingId, bookingNumber, paymentStatus, providerRespondedAt, requestExpiresAt, requestStatus, status, updatedAt }`. All timestamps are ISO-8601 strings on the wire. This is a notification payload, not full booking detail: fetch `GET /app/customer/bookings/:id` or `GET /app/provider/bookings/:id` to reconcile after reconnect or whenever the local state is uncertain.
 
-Provider details returned by **Get Provider** include a paginated `reviews` section containing active customer reviews. Add `reviewsPage` and `reviewsPageSize` to the request URL when more results are needed; their defaults are `1` and `10`.
+Provider details returned by **Get Provider** include a paginated `reviews` section containing active customer reviews. Each review includes `reply`, the provider's publicly active reply or `null` when there is none. Add `reviewsPage` and `reviewsPageSize` to the request URL when more results are needed; their defaults are `1` and `10`.
 
 ## Enums
 
