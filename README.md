@@ -8,6 +8,10 @@ The **Oursms SMS** folder is a provider-level readiness check, separate from the
 
 Use the source address exactly as returned by **List Source Addresses**. Indian test numbers must be entered in international format without `+`, for example `919876543210`. An Indian delivery test is only meaningful after Oursms confirms a supported India route and the required Indian DLT registration/template settings are configured.
 
+## Brevo email verification
+
+Select the **Brevo** environment and populate `brevoApiKey` and `brevoSenderEmail` with `BREVO_API_KEY` and `BREVO_SENDER_EMAIL` from the Rose API `.env` file. Then run **Brevo Email → Send Test Email**. This sends a real email to `brevoTestRecipient`; update that variable before sending to a different recipient. A `201` response means Brevo accepted the message. If the response says the IP is unrecognised, add your public IP under Brevo Security → Authorized IPs.
+
 ## Collection variables
 
 | Variable | Purpose | Default |

@@ -1,0 +1,42 @@
+meta {
+  name: Send Test Email
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{brevoBaseUrl}}/v3/smtp/email
+  body: json
+  auth: none
+}
+
+headers {
+  api-key: {{brevoApiKey}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "sender": {
+      "email": "{{brevoSenderEmail}}",
+      "name": "{{brevoSenderName}}"
+    },
+    "to": [
+      {
+        "email": "{{brevoTestRecipient}}"
+      }
+    ],
+    "subject": "Rose API email test",
+    "htmlContent": "<p>This is a test email sent using the current Rose API Brevo credentials.</p>",
+    "textContent": "This is a test email sent using the current Rose API Brevo credentials.",
+    "tags": [
+      "credential-test"
+    ]
+  }
+}
+
+tests {
+  test("Brevo accepts the transactional email", function() {
+    expect(res.getStatus()).to.equal(201);
+  });
+}

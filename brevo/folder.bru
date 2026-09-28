@@ -1,0 +1,16 @@
+meta {
+  name: Brevo Email
+  seq: 91
+}
+
+auth {
+  mode: none
+}
+
+docs {
+# Brevo transactional email
+
+Select the **Brevo** environment, set `brevoApiKey` to the `BREVO_API_KEY` value from Rose API's `.env`, and then run **Send Test Email**.
+
+The request submits a real email. Brevo accepting it (`201`) confirms the credentials and request format; it does not guarantee inbox delivery. If Brevo reports an unrecognised IP address, authorize the machine's public IP in Brevo Security → Authorized IPs before retrying.
+}
