@@ -19,3 +19,11 @@ body:multipart-form {
   nationalId[]: @file({{nationalIdBackPath}})
   selfieVerification: @file({{selfieVerificationPath}})
 }
+
+script:post-response {
+  const data = res.getBody();
+
+  if (data?.accessToken) {
+    bru.setVar("providerAccessToken", data.accessToken);
+  }
+}

@@ -38,7 +38,7 @@ Select the **Brevo** environment and populate `brevoApiKey` and `brevoSenderEmai
 
 ## Required sequences
 
-Customer registration: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. The final request sends `location` with a formatted address and coordinates, creates the customer's Home address, and captures `customerAccessToken`. Home and Explore requests always send the current `address`, `latitude`, and `longitude` as query parameters; they do not read a saved address. Existing customers use the login request/verify pair. Provider registration: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. Registration sends `location` and creates its first active service area. This creates a pending provider; only an active provider login returns `providerAccessToken`.
+Customer registration: **Register Request OTP** → **Register Verify OTP** → **Register Update Location**. The final request sends `location` with a formatted address and coordinates, creates the customer's Home address, and captures `customerAccessToken`. Home and Explore requests always send the current `address`, `latitude`, and `longitude` as query parameters; they do not read a saved address. Existing customers use the login request/verify pair. Provider registration: **Get Categories** → **Register Request OTP** → **Register Verify OTP** → **Register Upload Documents**. Registration sends `location` and creates its first active service area. This creates a pending provider and returns `providerAccessToken`.
 
 The local development API accepts OTP `123456`. Resend requests apply only to active register/login OTP sessions. Do not reuse customer variables in provider requests or vice versa.
 
