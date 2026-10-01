@@ -1,0 +1,22 @@
+meta {
+  name: Create Support Ticket With Attachment
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/app/provider/support-tickets
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{providerAccessToken}}
+}
+
+body:multipart-form {
+  topic: {{supportTicketTopic}}
+  description: {{supportTicketDescription}}
+  bookingRef: {{supportTicketBookingRef}}
+  file: @file({{supportTicketAttachmentPath}})
+}
