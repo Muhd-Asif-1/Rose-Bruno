@@ -136,3 +136,13 @@ Provider details returned by **Get Provider** include a paginated `reviews` sect
 | `requestStatus` | `pending`, `accepted`, `rejected`, `expired` |
 
 Get My Bookings accepts `upcoming`, `in_progress`, `completed`, or `cancelled` as `bookingListStatus`. Remove the `status` query parameter from the request URL to fetch every customer-facing booking group.
+
+### Dashboard calendar reporting
+
+Dashboard requests may send `X-Timezone: Asia/Kolkata` (or another IANA timezone) to use the viewer's local calendar. This header does not change customer/provider app APIs. Invalid timezone values return 422; omission retains each dashboard endpoint's existing default (UTC, except Commission's Asia/Riyadh month).
+
+Report reads and exports accept optional `comparisonPeriod=week|month|year`. Send it only with a complete calendar range in the supplied timezone: Monday–Sunday, first–last of month, or January 1–December 31. `fromAt` is inclusive and `toAt` is the next period's midnight, exclusive, expressed in UTC. Comparisons then use the previous **full calendar period**. Omit `comparisonPeriod` for custom or explicitly rolling 7D/30D/90D ranges.
+
+For October 2026 in India, use `/admin/reports/revenue?fromAt=2026-09-30T18%3A30%3A00.000Z&toAt=2026-10-31T18%3A30%3A00.000Z&comparisonPeriod=month` with `X-Timezone: Asia/Kolkata` and an admin bearer token. The export uses `/admin/reports/revenue/export` with the same header/parameters. October 1–31 compares with September 1–30.
+
+The support-ticket “Resolved — This month” summary counts currently resolved tickets created during that month, intersecting the user's other filters. Deploy API support before the updated dashboard; rollback the dashboard first. No migration or mobile update is required.
