@@ -16,8 +16,10 @@ headers {
 
 body:multipart-form {
   fullName: {{fullName}}
-  bio: {{providerBio}}
-  serviceLocation.address: {{providerAddress}}
+  bio.en: {{providerBio}}
+  bio.ar: {{providerBioAr}}
+  serviceLocation.address.en: {{providerAddress}}
+  serviceLocation.address.ar: {{providerAddressAr}}
   serviceLocation.latitude: {{providerLatitude}}
   serviceLocation.longitude: {{providerLongitude}}
   specialties[]: {{specialtyId}}
